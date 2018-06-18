@@ -1,0 +1,50 @@
+challenges:
+  levelUnlock:
+    Novice:
+      name: 'Novice'
+      display: 'GRASS:1'
+      #Level required before this is unlocked
+      required: ''
+      message: '&3Congrats you unlocked the Novice challenges!'
+      #items separated by space
+      rewardItems: 'DIAMOND:1 DIAMOND_PICKAXE:1'
+      moneyReward: 100
+      expReward: 100
+      #Perms separated by spaces
+      permissionReward: 'essentials.fly'
+      commands:
+        - 'kit tools {player}'
+challengeList:
+  Novice:
+    #All challenges here will be placed into the novice area
+    glassmaker:
+      name: 'Glass Maker'
+      display: 'GLASS:1'
+      desc: 'Get a stack of glass!'
+      type: 'inventory'
+      requiredItems: 'GLASS:64'
+      #Each item separated by space
+      rewardItems: 'DIAMOND:1'
+      rewardCommands:
+        - 'kit tools {player}'
+      takeItems: true
+    playerparty:
+      name: 'Player Party'
+      display: 'SKULL_ITEM:1:3'
+      desc: 'Get 5 players on your island'
+      type: 'island'
+      requiredItems: 'PLAYER:5'
+      rewardItems: 'DIAMOND:1'
+      rewardCommands:
+        - 'kit tools {player}'
+      takeItems: true
+    maximumcapacity:
+      name: 'Maximum Capacity'
+      display: 'EXP_BOTTLE:1'
+      desc: 'Reach 1000 is level'
+      type: 'level'
+      requiredItems: '1000'
+      rewardItems: 'DIAMOND:1'
+      rewardCommands:
+        - 'kit tools {player}'
+      takeItems: true
