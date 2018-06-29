@@ -530,7 +530,7 @@ public class IslandRegistry {
         Vector min = GooseLocationHelper.toLocation(island.getContainer().getMin()).toVector();
         Vector max = GooseLocationHelper.toLocation(island.getContainer().getMax()).toVector();
 
-        return loc.toVector().isInAABB(min, max) && loc.getWorld().getName().equalsIgnoreCase(GooseLocationHelper.toLocation(island.getSpawn()).getWorld().getName());
+        return loc.toVector().isInAABB(max, min) && loc.getWorld().getName().equalsIgnoreCase(GooseLocationHelper.toLocation(island.getSpawn()).getWorld().getName());
     }
 
     public Island getIslandForPlayer(Player player) {

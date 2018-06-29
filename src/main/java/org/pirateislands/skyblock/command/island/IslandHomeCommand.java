@@ -3,6 +3,7 @@ package org.pirateislands.skyblock.command.island;
 import com.google.common.collect.Lists;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.goose.GooseCommand;
@@ -31,6 +32,11 @@ public class IslandHomeCommand extends GooseCommand {
 
 
         Location spawn = GooseLocationHelper.toLocation(island.getSpawn());
+
+        if (spawn.getBlock().getType().equals(Material.AIR)) {
+            spawn.getBlock().setType(Material.COBBLESTONE);
+        }
+
         Location teleport = new Location(spawn.getWorld(), spawn.getBlockX(), spawn.getWorld().getHighestBlockYAt(spawn.getBlockX(), spawn.getBlockZ()) + 2, spawn.getZ());
 
         player.teleport(teleport);

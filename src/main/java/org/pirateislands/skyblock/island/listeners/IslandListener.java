@@ -71,8 +71,7 @@ public class IslandListener implements Listener {
     }
 
     @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event)
-    {
+    public void onBlockPlace(BlockPlaceEvent event) {
         Player placer = event.getPlayer();
         if (placer.hasPermission("skyblock.bypass")) {
             return;
@@ -82,14 +81,9 @@ public class IslandListener implements Listener {
             return;
         }
         Island conflict = SkyBlock.getPlugin().getIslandRegistry().getIslandAt(location);
-        if (conflict == null)
-        {
-            if (SkyBlock.getPlugin().getServerConfig().getServerType().equals(ServerType.ISLES)) {
-                return;
-            }
+        if (conflict == null) {
             event.setCancelled(true);
-            if (location.getWorld().getName().equalsIgnoreCase(SkyBlock.getPlugin().getIslandWorld().getName()))
-            {
+            if (location.getWorld().getName().equalsIgnoreCase(SkyBlock.getPlugin().getIslandWorld().getName())) {
                 placer.sendMessage(ChatColor.GREEN + "You cannot place outside of your island.");
                 MessageUtil.sendServerTheme(placer, ChatColor.YELLOW + "You can purchase a larger island at https://store.pirateislands.org");
             }

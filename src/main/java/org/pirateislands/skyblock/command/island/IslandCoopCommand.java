@@ -16,7 +16,8 @@ public class IslandCoopCommand extends GooseCommand {
 
     @Override
     public void execute(Player sender, String[] args) {
-        if (args.length == 0) {
+        if (args.length != 2) {
+            sender.sendMessage(ChatColor.RED + "Usage: /island <Add, Remove> <Player>");
             return;
         }
 
@@ -27,16 +28,12 @@ public class IslandCoopCommand extends GooseCommand {
             return;
         }
 
-        if (args.length != 2) {
-            return;
-        }
-
         String playerName = args[1];
 
         Player player = Bukkit.getPlayer(playerName);
 
         if (player == null) {
-            sender.sendMessage(ChatColor.RED + "That player is offline or does not exist!");
+            sender.sendMessage(ChatColor.RED + String.format("No player with the name or UUID of '%s' exists.", playerName));
             return;
         }
 

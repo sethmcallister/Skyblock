@@ -19,7 +19,6 @@ public class FlyCheckTask extends BukkitRunnable {
             Location location = player.getLocation();
             Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandAt(location);
             if (island == null) {
-                disableFlight(player);
                 return;
             }
 

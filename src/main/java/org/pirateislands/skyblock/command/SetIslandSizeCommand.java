@@ -51,15 +51,26 @@ public class SetIslandSizeCommand extends BukkitCommand {
             return true;
         }
         Integer size = Integer.parseInt(sizeSTR);
-        Integer currentSize = island.getSize();
         island.setSize(size);
-        Integer addition = size - currentSize;
 
-        Location min = GooseLocationHelper.toLocation(island.getContainer().getMin());
-        Location max = GooseLocationHelper.toLocation(island.getContainer().getMax());
+        Location center = GooseLocationHelper.toLocation(island.getSpawn()).subtract(4, 8, 6);
 
-        Region region = new Region(island.getContainer().getName(), GooseLocationHelper.fromLocation(min.subtract(addition, 0, addition)), GooseLocationHelper.fromLocation(max.add(addition, 0, addition)));
-        island.setContainer(region);
+        double minX = center.getBlockX() - size / 2D;
+        double minY = 0D;
+        double minZ = center.getBlockZ() - size / 2D;
+
+        double maxX = center.getBlockX() + size / 2D;
+        double maxY = 256D;
+        double maxZ = center.getBlockZ() + size / 2D;
+
+
+        Location min = new Location(SkyBlock.getPlugin().getIslandWorld(), minX, minY, minZ);
+        Location max = new Location(SkyBlock.getPlugin().getIslandWorld(), maxX, maxY, maxZ);
+
+        SkyBlock.getPlugin().getRegionHandler().deleteRegion(island.getContainer());
+
+        Region container = SkyBlock.getPlugin().getRegionHandler().createRegion(island.getName(), min, max);
+        island.setContainer(container);
         island.save();
         sender.sendMessage(ChatColor.YELLOW + String.format("You have set %s's island size to %s.", args[0], args[1]));
         for (UUID uuid : island.getMembers()) {

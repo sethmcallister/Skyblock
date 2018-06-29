@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,7 +22,6 @@ import org.pirateislands.skyblock.misc.MessageUtil;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
 
 public class GeneralListener implements Listener {
 
@@ -212,6 +212,13 @@ public class GeneralListener implements Listener {
                     return;
                 }
                 Location location = GooseLocationHelper.toLocation(island.getSpawn());
+
+                Block highest = location.getWorld().getHighestBlockAt(location);
+
+                if (highest.getType().equals(Material.AIR)) {
+                    location.getBlock().setType(Material.COBBLESTONE);
+                }
+
                 event.getPlayer().teleport(location.getWorld().getHighestBlockAt(location).getLocation());
                 event.getPlayer().setFallDistance(0);
                 return;
