@@ -1,12 +1,12 @@
-package org.pirateislands.skyblock.misc;
+package org.pirateislands.skyblock.util;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-/**
- * Created by Matt on 2017-02-26.
- */
 public class MessageUtil {
+    private MessageUtil() {
+
+    }
 
     public static void sendUrgent(Player player, String msg) {
         player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "[!] " + ChatColor.RED + msg);

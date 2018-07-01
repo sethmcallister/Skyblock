@@ -1,13 +1,13 @@
 package org.pirateislands.skyblock.command.island;
 
 import com.google.common.collect.Lists;
+import com.islesmc.islandapi.Island;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import com.islesmc.islandapi.Island;
 
 import java.util.UUID;
 
@@ -23,7 +23,7 @@ public class IslandMembersCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(sender);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(sender);
         if (island == null) {
             sender.sendMessage(ChatColor.RED + "You must be in an island to execute this command.");
             return;

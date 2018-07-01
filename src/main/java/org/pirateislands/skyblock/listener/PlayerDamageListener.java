@@ -1,9 +1,10 @@
-package org.pirateislands.skyblock.player.listener;
+package org.pirateislands.skyblock.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.timers.DefaultTimer;
 import org.pirateislands.skyblock.timers.Timer;
@@ -56,5 +57,24 @@ public class PlayerDamageListener implements Listener {
             timer1.setTime(TimeUnit.SECONDS.toMillis(30L) + System.currentTimeMillis());
         else
             SkyBlock.getPlugin().getTimerHandler().addTimer(damager, new DefaultTimer(TimerType.COMBAT_TAG, TimeUnit.SECONDS.toMillis(30L) + System.currentTimeMillis(), damager));
+    }
+
+    @EventHandler
+    public void onFallDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player))
+            return;
+
+        Player player = (Player) event.getEntity();
+
+        if (!(player.getWorld() == SkyBlock.getPlugin().getServerConfig().getSpawnLocation().getWorld()))
+            return;
+
+        if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+            System.out.println(193);
+            player.teleport(SkyBlock.getPlugin().getServerConfig().getSpawnLocation());
+            return;
+        }
+
+        event.setCancelled(true);
     }
 }

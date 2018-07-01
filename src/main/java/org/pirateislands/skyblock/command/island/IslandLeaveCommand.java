@@ -1,6 +1,7 @@
 package org.pirateislands.skyblock.command.island;
 
 import com.google.common.collect.Lists;
+import com.islesmc.islandapi.Island;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,8 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import com.islesmc.islandapi.Island;
-import org.pirateislands.skyblock.misc.MessageUtil;
+import org.pirateislands.skyblock.util.MessageUtil;
 
 import java.util.UUID;
 
@@ -31,7 +31,7 @@ public class IslandLeaveCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(player);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
         if (island == null) {
             player.sendMessage(ChatColor.RED + "You do not currently have an island.");
             return;
@@ -43,7 +43,7 @@ public class IslandLeaveCommand extends GooseCommand {
                 openNewOwnerSelector(player, island);
                 return;
             } else {
-                SkyBlock.getPlugin().getIslandRegistry().deleteIsland(player, island);
+                SkyBlock.getPlugin().getIslandHandler().deleteIsland(player, island);
 //                Bukkit.broadcastMessage(ChatColor.GRAY + ChatColor.BOLD.toString() + island.getName() + " Status: " + ChatColor.RED + ChatColor.BOLD.toString() + "[FALLEN]");
             }
         } else {

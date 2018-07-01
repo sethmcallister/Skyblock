@@ -5,9 +5,9 @@ import com.islesmc.islandapi.Island;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.pirateislands.skyblock.SkyBlock;
+import org.pirateislands.skyblock.dto.ChatMode;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import org.pirateislands.skyblock.island.ChatMode;
-import org.pirateislands.skyblock.island.listeners.GeneralListener;
+import org.pirateislands.skyblock.listener.AsyncPlayerChatListener;
 
 public class IslandChatCommand extends GooseCommand {
     public IslandChatCommand() {
@@ -21,7 +21,7 @@ public class IslandChatCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(sender);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(sender);
         if (island == null) {
             sender.sendMessage(ChatColor.RED + "You must be in an island to execute this command.");
             return;
@@ -32,7 +32,7 @@ public class IslandChatCommand extends GooseCommand {
             case "i":
             case "team":
             case "island": {
-                GeneralListener.CHAT_MODE_MAP.put(sender.getUniqueId(), ChatMode.ISLAND);
+                AsyncPlayerChatListener.CHAT_MODE_MAP.put(sender.getUniqueId(), ChatMode.ISLAND);
                 sender.sendMessage(ChatColor.YELLOW + "You are now speaking in " + ChatColor.GREEN + "Island " + ChatColor.YELLOW + "chat.");
                 break;
             }
@@ -40,7 +40,7 @@ public class IslandChatCommand extends GooseCommand {
             case "global":
             case "public":
             case "p": {
-                GeneralListener.CHAT_MODE_MAP.put(sender.getUniqueId(), ChatMode.PUBLIC);
+                AsyncPlayerChatListener.CHAT_MODE_MAP.put(sender.getUniqueId(), ChatMode.PUBLIC);
                 sender.sendMessage(ChatColor.YELLOW + "You are now speaking in " + ChatColor.GREEN + "Public " + ChatColor.YELLOW + "chat.");
                 break;
             }

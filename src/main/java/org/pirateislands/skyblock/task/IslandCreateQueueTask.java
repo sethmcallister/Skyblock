@@ -15,8 +15,9 @@ import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.command.island.IslandCreateCommand;
 import org.pirateislands.skyblock.configuration.ServerType;
 import org.pirateislands.skyblock.goose.GooseLocationHelper;
-import org.pirateislands.skyblock.misc.LocationUtil;
-import org.pirateislands.skyblock.misc.MessageUtil;
+import org.pirateislands.skyblock.util.LocationUtil;
+import org.pirateislands.skyblock.util.MessageUtil;
+import org.pirateislands.skyblock.util.SchematicUtil;
 
 import java.io.IOException;
 import java.util.*;
@@ -51,11 +52,11 @@ public class IslandCreateQueueTask extends BukkitRunnable {
 
 //            Location center;
 //
-//            if (SkyBlock.getPlugin().getIslandRegistry().getLastIsland() == null) {
+//            if (SkyBlock.getPlugin().getIslandHandler().getLastIsland() == null) {
 //                center = new Location(SkyBlock.getPlugin().getIslandWorld(), 0, 100, 0);
 //            }
 //            else {
-//                center = SkyBlock.getPlugin().getIslandRegistry().nextIslandLocation(SkyBlock.getPlugin().getIslandRegistry().getLastIsland());
+//                center = SkyBlock.getPlugin().getIslandHandler().nextIslandLocation(SkyBlock.getPlugin().getIslandHandler().getLastIsland());
 //            }
 
             if (center == null) {
@@ -105,7 +106,7 @@ public class IslandCreateQueueTask extends BukkitRunnable {
             int y = SkyBlock.getPlugin().getServerConfig().getServerType().equals(ServerType.ISLES) ? 46 : 100;
 
             try {
-                SkyBlock.getPlugin().getSchematicLoader().pasteSchematic(item.type.name().toLowerCase() + ".schematic", SkyBlock.getPlugin().getIslandWorld(), center.getBlockX(), y, center.getBlockZ());
+                SchematicUtil.pasteSchematic(item.type.name().toLowerCase() + ".schematic", SkyBlock.getPlugin().getIslandWorld(), center.getBlockX(), y, center.getBlockZ());
             } catch (DataException | IOException | MaxChangedBlocksException e) {
                 e.printStackTrace();
             }
@@ -118,9 +119,9 @@ public class IslandCreateQueueTask extends BukkitRunnable {
 
             MessageUtil.sendServerTheme(player, ChatColor.GREEN + "Your island has been created.");
             player.sendMessage(ChatColor.GREEN + "Type (/is home) to visit.");
-            SkyBlock.getPlugin().getIslandRegistry().registerIsland(player.getUniqueId(), island);
+            SkyBlock.getPlugin().getIslandHandler().registerIsland(player.getUniqueId(), island);
             this.islandQueue.remove(item);
-            SkyBlock.getPlugin().getIslandRegistry().setLastIsland(center);
+            SkyBlock.getPlugin().getIslandHandler().setLastIsland(center);
             SkyBlock.getPlugin().getServerConfig().setLastIslandLocation(GooseLocationHelper.fromLocation(center));
             SkyBlock.getPlugin().getServerConfig().save();
 
@@ -134,9 +135,9 @@ public class IslandCreateQueueTask extends BukkitRunnable {
         if (last == null) {
             last = GooseLocationHelper.fromLocation(new Location(SkyBlock.getPlugin().getIslandWorld(), 0, 0, 0));
         }
-        Location next = SkyBlock.getPlugin().getIslandRegistry().getNextLocation(GooseLocationHelper.toLocation(last));
-        while (SkyBlock.getPlugin().getIslandRegistry().getIslandAt(next) != null) {
-            next = SkyBlock.getPlugin().getIslandRegistry().getNextLocation(next);
+        Location next = SkyBlock.getPlugin().getIslandHandler().getNextLocation(GooseLocationHelper.toLocation(last));
+        while (SkyBlock.getPlugin().getIslandHandler().getIslandAt(next) != null) {
+            next = SkyBlock.getPlugin().getIslandHandler().getNextLocation(next);
         }
         return next;
     }

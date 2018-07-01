@@ -9,9 +9,6 @@ import org.bukkit.plugin.Plugin;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Matt on 2017-02-11.
- */
 public class RegionSessionFactory {
 
     private List<RegionSession> activeSessions = new ArrayList<>();

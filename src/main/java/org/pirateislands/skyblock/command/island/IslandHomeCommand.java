@@ -1,13 +1,13 @@
 package org.pirateislands.skyblock.command.island;
 
 import com.google.common.collect.Lists;
+import com.islesmc.islandapi.Island;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import com.islesmc.islandapi.Island;
 import org.pirateislands.skyblock.goose.GooseLocationHelper;
 
 /**
@@ -24,7 +24,7 @@ public class IslandHomeCommand extends GooseCommand {
             player.sendMessage(ChatColor.RED + "Usage: /island home");
             return;
         }
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(player);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
         if (island == null) {
             player.sendMessage(ChatColor.RED + "You do not have an island to teleport to.");
             return;

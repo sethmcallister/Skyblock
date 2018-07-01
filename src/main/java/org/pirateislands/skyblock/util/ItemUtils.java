@@ -1,4 +1,4 @@
-package org.pirateislands.skyblock.misc;
+package org.pirateislands.skyblock.util;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,6 +12,9 @@ import java.util.List;
 
 public class ItemUtils {
     private ItemStack item;
+
+    private ItemUtils() {
+    }
 
     public ItemUtils(Material mat) {
         this.item = new ItemStack(mat);

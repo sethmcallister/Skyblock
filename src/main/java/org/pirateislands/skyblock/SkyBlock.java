@@ -14,7 +14,6 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.pirateislands.skyblock.command.*;
 import org.pirateislands.skyblock.command.island.*;
-import org.pirateislands.skyblock.command.mission.LevelCommand;
 import org.pirateislands.skyblock.configuration.OreGenerationConfig;
 import org.pirateislands.skyblock.configuration.ServerConfig;
 import org.pirateislands.skyblock.configuration.ServerType;
@@ -22,34 +21,24 @@ import org.pirateislands.skyblock.goose.GooseCommandHandler;
 import org.pirateislands.skyblock.goose.GooseHandler;
 import org.pirateislands.skyblock.goose.GooseTicker;
 import org.pirateislands.skyblock.handler.CombatLogHandler;
-import org.pirateislands.skyblock.island.IslandGUIHandler;
-import org.pirateislands.skyblock.island.IslandOreGens;
-import org.pirateislands.skyblock.island.IslandRegistry;
-import org.pirateislands.skyblock.island.listeners.GeneralListener;
-import org.pirateislands.skyblock.island.listeners.IslandListener;
-import org.pirateislands.skyblock.island.listeners.isles.CoordinateBookListener;
-import org.pirateislands.skyblock.island.listeners.isles.IslesRaidListener;
-import org.pirateislands.skyblock.player.listener.*;
+import org.pirateislands.skyblock.handler.IslandHandler;
+import org.pirateislands.skyblock.listener.*;
 import org.pirateislands.skyblock.region.RegionHandler;
-import org.pirateislands.skyblock.schematic.SchematicLoader;
 import org.pirateislands.skyblock.task.BackupTask;
 import org.pirateislands.skyblock.task.FlyCheckTask;
-import org.pirateislands.skyblock.task.PlayerWorldSwitchFixer;
 import org.pirateislands.skyblock.timers.TimerHandler;
 import org.pirateislands.skyblock.util.GridUtil;
+import org.pirateislands.skyblock.util.SchematicUtil;
 
 import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Matt on 2017-02-10.
- */
 public class SkyBlock extends PluginModule {
 
     private static SkyBlock plugin;
-    public SchematicLoader schematicLoader;
+    public SchematicUtil schematicUtil;
     private RegionHandler regionHandler;
-    private IslandRegistry islandRegistry;
+    private IslandHandler islandHandler;
     private WorldEditPlugin worldEditPlugin;
     private OreGenerationConfig oreGenerationConfig;
     private ServerConfig serverConfig;
@@ -97,7 +86,7 @@ public class SkyBlock extends PluginModule {
                 islandWorld = Bukkit.getWorld("Skyblock");
 
                 setupEconomy();
-                islandRegistry = new IslandRegistry();
+                islandHandler = new IslandHandler();
 
                 if (Bukkit.getPluginManager().getPlugin("WorldEdit") != null && !Bukkit.getPluginManager().getPlugin("WorldEdit").isEnabled()) {
                     disable();
@@ -107,13 +96,10 @@ public class SkyBlock extends PluginModule {
             }
         }.runTaskLater(API.getPlugin(), 20L);
 
-        schematicLoader = new SchematicLoader();
         setupShit();
 
         new GooseTicker().runTaskTimerAsynchronously(API.getPlugin(), 1L, 1L);
         new BackupTask().runTaskTimer(API.getPlugin(), TimeUnit.MINUTES.toSeconds(25L) * 20L, TimeUnit.MINUTES.toSeconds(25L) * 20L);
-//        new PlayerWorldSwitchFixer().runTaskTimer(API.getPlugin(), 10L, 10L);
-//        new TabUpdateTask().runTaskTimerAsynchronously(API.getPlugin(), 1L, 20L);
     }
 
     private boolean setupEconomy() {
@@ -140,7 +126,7 @@ public class SkyBlock extends PluginModule {
 
     @Override
     public void onDisable() {
-        islandRegistry.disable();
+        islandHandler.disable();
         getServerConfig().save();
     }
 
@@ -148,35 +134,40 @@ public class SkyBlock extends PluginModule {
         return oreGenerationConfig;
     }
 
-    public IslandRegistry getIslandRegistry() {
-        return islandRegistry;
+    public IslandHandler getIslandHandler() {
+        return islandHandler;
     }
 
     public WorldEditPlugin getWorldEditPlugin() {
         return worldEditPlugin;
     }
 
-    public SchematicLoader getSchematicLoader() {
-        return schematicLoader;
+    public SchematicUtil getSchematicUtil() {
+        return schematicUtil;
     }
 
     private void setupShit() {
-        registerEvent(new IslandListener());
-        registerEvent(new IslandGUIHandler());
-        registerEvent(new GeneralListener());
-        registerEvent(new IslandOreGens());
         registerEvent(this.gooseHandler);
-        registerEvent(new PlayerJoinListener());
+
+        registerEvent(new AsyncPlayerChatListener());
+        registerEvent(new BlockBreakListener());
+        registerEvent(new BlockFromToListener());
+        registerEvent(new BlockPhysicsListener());
+        registerEvent(new BlockPlaceListener());
+        registerEvent(new CreatureSpawnListener());
+        registerEvent(new EntityDamageByEntityListener());
+        registerEvent(new FoodLevelChangeListener());
+        registerEvent(new InventoryClickListener());
+        registerEvent(new PlayerBucketEmtptyListener());
+        registerEvent(new PlayerBucketFillListener());
         registerEvent(new PlayerDamageListener());
         registerEvent(new PlayerDeathListener());
         registerEvent(new PlayerInteractListener());
-
-        if (getServerConfig().getServerType().equals(ServerType.ISLES)) {
-            registerEvent(new IslesRaidListener());
-            registerEvent(new CoordinateBookListener());
-            registerEvent(new PlayerBoatListener());
-            registerCommand("givecoordinatebook", new GiveCoordinateBookCommand());
-        }
+        registerEvent(new PlayerJoinListener());
+        registerEvent(new PlayerMoveListener());
+        registerEvent(new PlayerRespawnListener());
+        registerEvent(new PlayerTeleportListener());
+        registerEvent(new SignChangeListener());
 
         new FlyCheckTask().runTaskTimerAsynchronously(API.getPlugin(), 1L, 5L);
 
@@ -209,7 +200,6 @@ public class SkyBlock extends PluginModule {
         registerCommand("region", new RegionCommand());
         registerCommand("setspawn", new SetSpawnCommand());
         registerCommand("spawn", new SpawnCommand());
-        registerCommand("level", new LevelCommand());
         registerCommand("balance", new BalanceCommand());
         registerCommand("pay", new PayCommand());
         registerCommand("help", new HelpCommand());

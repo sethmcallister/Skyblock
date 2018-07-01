@@ -15,9 +15,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * Owned by SethyCorp, and KueMedia respectively.
- **/
 public class ServerConfig {
     private final transient String fileName;
     private final transient Gson gson;

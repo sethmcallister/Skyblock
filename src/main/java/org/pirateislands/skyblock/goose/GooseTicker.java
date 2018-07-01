@@ -97,8 +97,8 @@ public class GooseTicker extends BukkitRunnable {
                 double balance = SkyBlock.getPlugin().getEconomy().getBalance(player);
                 scoreboard.add(translateString(primaryColor + "Balance&7: "), translateString("&f$" + SkyBlock.getPlugin().format(balance)));
                 scoreboard.add(translateString(primaryColor + "Mob Coins&7: "), translateString("&f" + user.getProfile("mobcoins").getDouble("coins").intValue()));
-                scoreboard.add(" "," ");
-                Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(player);
+                scoreboard.add(" ", " ");
+                Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
                 if (island == null) {
                     scoreboard.add(translateString(primaryColor + "Island&7: "), translateString("&fNone"));
                 } else {

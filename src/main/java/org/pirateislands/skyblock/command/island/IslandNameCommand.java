@@ -1,11 +1,11 @@
 package org.pirateislands.skyblock.command.island;
 
 import com.google.common.collect.Lists;
+import com.islesmc.islandapi.Island;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import com.islesmc.islandapi.Island;
 
 public class IslandNameCommand extends GooseCommand {
 
@@ -22,7 +22,7 @@ public class IslandNameCommand extends GooseCommand {
         }
 
         String name = args[0];
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(sender);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(sender);
 
         if (island == null) {
             sender.sendMessage(ChatColor.RED + "You do not have an island to name!");

@@ -1,13 +1,13 @@
 package org.pirateislands.skyblock.command.island;
 
 import com.google.common.collect.Lists;
+import com.islesmc.islandapi.Island;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import com.islesmc.islandapi.Island;
 
 import java.util.UUID;
 
@@ -29,7 +29,7 @@ public class IslandForceJoinCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(player);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
         if (island != null) {
             player.sendMessage(ChatColor.RED + "You have to leave your current island first");
             return;
@@ -43,7 +43,7 @@ public class IslandForceJoinCommand extends GooseCommand {
 
         UUID playerUUID = offlinePlayer.getUniqueId();
 
-        Island targetIsland = SkyBlock.getPlugin().getIslandRegistry().findByUniqueId(playerUUID);
+        Island targetIsland = SkyBlock.getPlugin().getIslandHandler().findByUniqueId(playerUUID);
 
         if (targetIsland == null) {
             player.sendMessage(ChatColor.RED + String.format("The player '%s' does not have an island.", offlinePlayer.getName()));

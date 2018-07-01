@@ -1,4 +1,4 @@
-package org.pirateislands.skyblock.schematic;
+package org.pirateislands.skyblock.util;
 
 import com.islesmc.modules.api.API;
 import com.sk89q.worldedit.CuboidClipboard;
@@ -16,17 +16,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
-/**
- * Created by Matt on 2017-02-10.
- */
-public class SchematicLoader {
-    private File schematicDir;
-
-    public SchematicLoader() {
-
+public class SchematicUtil {
+    private SchematicUtil() {
     }
 
-    public void pasteSchematic(String file, World world, int x, int y, int z) throws DataException, IOException, MaxChangedBlocksException {
+    public static void pasteSchematic(String file, World world, int x, int y, int z) throws DataException, IOException, MaxChangedBlocksException {
         File schematic = new File(SkyBlock.getPlugin().getModuleDir() + "/schematics", file);
         if (schematic.exists()) {
             Vector origin = new Vector(x, y, z);

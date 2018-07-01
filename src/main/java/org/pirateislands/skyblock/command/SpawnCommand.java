@@ -7,11 +7,8 @@ import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.pirateislands.skyblock.SkyBlock;
-import org.pirateislands.skyblock.misc.MessageUtil;
+import org.pirateislands.skyblock.util.MessageUtil;
 
-/**
- * Created by Matt on 2017-02-25.
- */
 public class SpawnCommand extends BukkitCommand {
 
     public SpawnCommand() {

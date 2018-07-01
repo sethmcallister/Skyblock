@@ -1,13 +1,13 @@
 package org.pirateislands.skyblock.command.island;
 
 import com.google.common.collect.Lists;
+import com.islesmc.islandapi.Island;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import com.islesmc.islandapi.Island;
-import org.pirateislands.skyblock.misc.MessageUtil;
+import org.pirateislands.skyblock.util.MessageUtil;
 
 /**
  * Created by Matt on 2017-02-25.
@@ -25,7 +25,7 @@ public class IslandKickCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(player);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
 
         if (island == null) {
             player.sendMessage(ChatColor.RED + "You do not currently have an island.");
@@ -50,7 +50,7 @@ public class IslandKickCommand extends GooseCommand {
         }
 
         island.getMembers().remove(target.getUniqueId());
-        if (SkyBlock.getPlugin().getIslandRegistry().isInIslandRegion(island, target.getLocation())) {
+        if (SkyBlock.getPlugin().getIslandHandler().isInIslandRegion(island, target.getLocation())) {
             target.teleport(SkyBlock.getPlugin().getServerConfig().getSpawnLocation());
         }
         MessageUtil.sendServerTheme(player, ChatColor.YELLOW + String.format("You have kicked %s from your island.", target.getName()));

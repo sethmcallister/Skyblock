@@ -12,9 +12,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-/**
- * Created by Matt on 2017-02-11.
- */
 public class RegionSession implements Listener {
 
     private Player player;

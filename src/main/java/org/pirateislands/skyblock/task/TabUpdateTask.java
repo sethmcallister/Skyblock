@@ -52,7 +52,7 @@ public class TabUpdateTask extends BukkitRunnable {
         items.add(new TextTabItem(" "));
         items.add(new TextTabItem(" "));
         items.add(new TextTabItem(primaryColor + "&lIsland"));
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(player);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
         if (island == null) {
             items.add(new TextTabItem("&fNone"));
             items.add(new TextTabItem(" "));
@@ -86,8 +86,8 @@ public class TabUpdateTask extends BukkitRunnable {
         // 4/21
         int i = 0;
         int max = 10;
-        if (SkyBlock.getPlugin().getIslandRegistry().playerIslands.size() < 10) {
-            max = SkyBlock.getPlugin().getIslandRegistry().playerIslands.size();
+        if (SkyBlock.getPlugin().getIslandHandler().playerIslands.size() < 10) {
+            max = SkyBlock.getPlugin().getIslandHandler().playerIslands.size();
         }
         for (Map.Entry<Island, Integer> entry : IslandTopCommand.getTopIslands().subList(0, max)) {
             i++;

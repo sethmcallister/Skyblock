@@ -10,12 +10,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.pirateislands.skyblock.SkyBlock;
-import org.pirateislands.skyblock.configuration.ServerType;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import org.pirateislands.skyblock.misc.MessageUtil;
+import org.pirateislands.skyblock.util.MessageUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,7 +53,7 @@ public class IslandCreateCommand extends GooseCommand {
             return;
         }
 
-        if (SkyBlock.getPlugin().getIslandRegistry().hasIsland(player)) {
+        if (SkyBlock.getPlugin().getIslandHandler().hasIsland(player)) {
             player.sendMessage(ChatColor.RED + "You already have an island.");
             return;
         }

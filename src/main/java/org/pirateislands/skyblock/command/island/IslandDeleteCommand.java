@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import org.pirateislands.skyblock.misc.MessageUtil;
+import org.pirateislands.skyblock.util.MessageUtil;
 
 /**
  * Created by Matt on 2017-02-25.
@@ -25,7 +25,7 @@ public class IslandDeleteCommand extends GooseCommand implements Listener {
             player.sendMessage(ChatColor.RED + "Usage: /island delete");
         }
 
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(player);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
 
         if (island == null) {
             player.sendMessage(ChatColor.RED + "You do not have an island to delete.");
@@ -37,7 +37,7 @@ public class IslandDeleteCommand extends GooseCommand implements Listener {
             return;
         }
 
-        SkyBlock.getPlugin().getIslandRegistry().deleteIsland(player, island);
+        SkyBlock.getPlugin().getIslandHandler().deleteIsland(player, island);
         MessageUtil.sendServerTheme(player, "You have successfully deleted your island.");
     }
 }

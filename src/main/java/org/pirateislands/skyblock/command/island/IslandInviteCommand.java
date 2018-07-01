@@ -1,6 +1,7 @@
 package org.pirateislands.skyblock.command.island;
 
 import com.google.common.collect.Lists;
+import com.islesmc.islandapi.Island;
 import com.islesmc.modules.api.API;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -12,9 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import com.islesmc.islandapi.Island;
-import org.pirateislands.skyblock.island.IslandRegistry;
-import org.pirateislands.skyblock.misc.MessageUtil;
+import org.pirateislands.skyblock.handler.IslandHandler;
+import org.pirateislands.skyblock.util.MessageUtil;
 
 /**
  * Created by Matt on 2017-02-25.
@@ -42,7 +42,7 @@ public class IslandInviteCommand extends GooseCommand {
             return;
         }
 
-        IslandRegistry registry = SkyBlock.getPlugin().getIslandRegistry();
+        IslandHandler registry = SkyBlock.getPlugin().getIslandHandler();
 
         if (!registry.hasIsland(player)) {
             player.sendMessage(ChatColor.RED + "You do not currently have an island.");

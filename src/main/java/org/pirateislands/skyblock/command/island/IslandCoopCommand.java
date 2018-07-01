@@ -21,7 +21,7 @@ public class IslandCoopCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(sender);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(sender);
 
         if (island == null) {
             sender.sendMessage(ChatColor.RED + "You do not have an island to do this!");

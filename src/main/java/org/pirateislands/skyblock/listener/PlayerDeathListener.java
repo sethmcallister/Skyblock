@@ -1,4 +1,4 @@
-package org.pirateislands.skyblock.player.listener;
+package org.pirateislands.skyblock.listener;
 
 import com.islesmc.modules.api.API;
 import com.islesmc.modules.api.framework.user.User;

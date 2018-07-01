@@ -16,9 +16,6 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Owned by SethyCorp, and KueMedia respectively.
- **/
 public class OreGenerationConfig {
     private final transient Gson gson;
     private final transient String fileName;

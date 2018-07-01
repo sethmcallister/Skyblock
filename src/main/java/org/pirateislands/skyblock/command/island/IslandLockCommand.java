@@ -1,13 +1,13 @@
 package org.pirateislands.skyblock.command.island;
 
 import com.google.common.collect.Lists;
+import com.islesmc.islandapi.Island;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.configuration.ServerType;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import com.islesmc.islandapi.Island;
-import org.pirateislands.skyblock.misc.MessageUtil;
+import org.pirateislands.skyblock.util.MessageUtil;
 
 public class IslandLockCommand extends GooseCommand {
     public IslandLockCommand() {
@@ -25,7 +25,7 @@ public class IslandLockCommand extends GooseCommand {
             sender.sendMessage(ChatColor.RED + "Usage: /island lock");
             return;
         }
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(sender);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(sender);
 
         if (island == null) {
             sender.sendMessage(ChatColor.RED + "You do not currently have an island.");

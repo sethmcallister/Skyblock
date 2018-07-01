@@ -1,13 +1,13 @@
 package org.pirateislands.skyblock.command.island;
 
 import com.google.common.collect.Lists;
+import com.islesmc.islandapi.Island;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.configuration.ServerType;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import com.islesmc.islandapi.Island;
 
 public class IslandExpelCommand extends GooseCommand {
 
@@ -38,7 +38,7 @@ public class IslandExpelCommand extends GooseCommand {
     }
 
     private void handleExpell(Player owner, Player player) {
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(owner);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(owner);
 
         if (!island.getOwner().equals(owner.getUniqueId())) {
             owner.sendMessage(ChatColor.RED + "You cannot ban a player!");
@@ -61,7 +61,7 @@ public class IslandExpelCommand extends GooseCommand {
         owner.sendMessage(ChatColor.YELLOW + "You have banned " + player.getName());
         player.sendMessage(ChatColor.YELLOW + "You have been banned from " + island.getName() + "'s island");
 
-        Island currentIsland = SkyBlock.getPlugin().getIslandRegistry().getIslandAt(player.getLocation());
+        Island currentIsland = SkyBlock.getPlugin().getIslandHandler().getIslandAt(player.getLocation());
 
         if (currentIsland == null || currentIsland != island) {
             return;

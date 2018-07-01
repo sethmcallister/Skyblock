@@ -1,4 +1,4 @@
-package org.pirateislands.skyblock.island;
+package org.pirateislands.skyblock.handler;
 
 import com.islesmc.islandapi.Island;
 import com.islesmc.islandapi.IslandAPI;
@@ -19,17 +19,14 @@ import org.bukkit.util.Vector;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.configuration.ServerType;
 import org.pirateislands.skyblock.goose.GooseLocationHelper;
-import org.pirateislands.skyblock.misc.MessageUtil;
 import org.pirateislands.skyblock.task.IslandCreateQueueTask;
+import org.pirateislands.skyblock.util.MessageUtil;
 
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.*;
 
-/**
- * Created by Matt on 2017-02-11.
- */
-public class IslandRegistry {
+public class IslandHandler {
 
     public final List<Island> playerIslands = new ArrayList<>();
 
@@ -45,7 +42,7 @@ public class IslandRegistry {
 
     private Location lastIsland = null;
 
-    public IslandRegistry() {
+    public IslandHandler() {
         this.queueTask = new IslandCreateQueueTask();
         this.queueTask.runTaskTimer(API.getPlugin(), 40L, 40L);
         loadIslands();
@@ -211,7 +208,7 @@ public class IslandRegistry {
 
         List<Block> blocks = new ArrayList<>();
 
-        for (int i = min.getBlockX(); i <= max.getBlockX();i++) {
+        for (int i = min.getBlockX(); i <= max.getBlockX(); i++) {
             for (int j = min.getBlockY(); j <= max.getBlockY(); j++) {
                 for (int k = min.getBlockZ(); k <= max.getBlockZ(); k++) {
                     Block block = point1.getWorld().getBlockAt(i, j, k);
@@ -389,7 +386,7 @@ public class IslandRegistry {
 //        island.save();
 //
 //        try {
-//            SkyBlock.getPlugin().getSchematicLoader().pasteSchematic(type.name().toLowerCase() + ".schematic", SkyBlock.getPlugin().getIslandWorld(), center.getBlockX(), 100, center.getBlockZ());
+//            SkyBlock.getPlugin().getSchematicUtil().pasteSchematic(type.name().toLowerCase() + ".schematic", SkyBlock.getPlugin().getIslandWorld(), center.getBlockX(), 100, center.getBlockZ());
 //        } catch (DataException | IOException e) {
 //            e.printStackTrace();
 //        }
@@ -459,7 +456,7 @@ public class IslandRegistry {
 
     public Island getIslandAt(Location location) {
         for (Island island : this.playerIslands) {
-            if ((island != null ) && (location != null) && (island.getContainer() != null) && (island.getContainer().getMin() != null) && (island.getContainer().getMax() != null)) {
+            if ((island != null) && (location != null) && (island.getContainer() != null) && (island.getContainer().getMin() != null) && (island.getContainer().getMax() != null)) {
                 Location min = GooseLocationHelper.toLocation(island.getContainer().getMin());
                 Location max = GooseLocationHelper.toLocation(island.getContainer().getMax());
 

@@ -1,4 +1,4 @@
-package org.pirateislands.skyblock.island;
+package org.pirateislands.skyblock.dto;
 
 public enum ChatMode {
     PUBLIC,

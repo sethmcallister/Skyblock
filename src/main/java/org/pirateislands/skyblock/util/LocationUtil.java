@@ -1,13 +1,12 @@
-package org.pirateislands.skyblock.misc;
+package org.pirateislands.skyblock.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-/**
- * Created by Matt on 2017-02-12.
- */
 public class LocationUtil {
+    private LocationUtil() {
+    }
 
     public static Location deserialize(String serialized) {
         String[] split = serialized.split(",");

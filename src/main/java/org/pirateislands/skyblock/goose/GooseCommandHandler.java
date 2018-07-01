@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Owned by SethyCorp, and KueMedia respectively.
- **/
 public class GooseCommandHandler extends BukkitCommand {
     private final Map<String, GooseCommand> commands;
     private final GooseCommand defaultCommand;

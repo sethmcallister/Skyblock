@@ -8,9 +8,6 @@ import org.bukkit.entity.Player;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.goose.GooseLocationHelper;
 
-/**
- * Created by Matt on 2017-02-25.
- */
 public class SetSpawnCommand extends BukkitCommand {
 
     public SetSpawnCommand() {

@@ -1,4 +1,4 @@
-package org.pirateislands.skyblock.island;
+package org.pirateislands.skyblock.listener;
 
 import com.islesmc.islandapi.Island;
 import com.islesmc.islandapi.IslandType;
@@ -16,14 +16,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.command.island.IslandCreateCommand;
-import org.pirateislands.skyblock.misc.MessageUtil;
+import org.pirateislands.skyblock.handler.IslandHandler;
+import org.pirateislands.skyblock.util.MessageUtil;
 
 import java.io.File;
 
-/**
- * Created by Matt on 2017-02-25.
- */
-public class IslandGUIHandler implements Listener {
+public class InventoryClickListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
@@ -52,7 +50,7 @@ public class IslandGUIHandler implements Listener {
                 @Override
                 public void run() {
                     IslandCreateCommand.ISLAND_MAKING.add(pl.getUniqueId());
-                    SkyBlock.getPlugin().getIslandRegistry().createIsland(pl, type);
+                    SkyBlock.getPlugin().getIslandHandler().createIsland(pl, type);
                 }
             }.runTaskAsynchronously(API.getPlugin());
         } else if (event.getClickedInventory().getTitle().equalsIgnoreCase("Owner Selection")) {
@@ -62,7 +60,7 @@ public class IslandGUIHandler implements Listener {
             ItemStack item = event.getCurrentItem();
             ItemMeta meta = item.getItemMeta();
 
-            IslandRegistry registry = SkyBlock.getPlugin().getIslandRegistry();
+            IslandHandler registry = SkyBlock.getPlugin().getIslandHandler();
 
             Island playerIsland = registry.getIslandForPlayer(pl);
 

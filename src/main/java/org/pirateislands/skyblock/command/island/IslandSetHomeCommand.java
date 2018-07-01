@@ -1,13 +1,12 @@
 package org.pirateislands.skyblock.command.island;
 
 import com.google.common.collect.Lists;
-import com.islesmc.islandapi.goose.GooseLocation;
+import com.islesmc.islandapi.Island;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.goose.GooseCommand;
-import com.islesmc.islandapi.Island;
 import org.pirateislands.skyblock.goose.GooseLocationHelper;
 
 import java.util.UUID;
@@ -25,7 +24,7 @@ public class IslandSetHomeCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandRegistry().getIslandForPlayer(player);
+        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
 
         if (island == null) {
             player.sendMessage(ChatColor.RED + "You must have an island to execute this command.");
@@ -36,7 +35,7 @@ public class IslandSetHomeCommand extends GooseCommand {
         int y = Math.round(player.getLocation().getBlockY());
         int z = Math.round(player.getLocation().getBlockZ());
 
-        if (!SkyBlock.getPlugin().getIslandRegistry().getIslandAt(player.getLocation()).isMember(player.getUniqueId())) {
+        if (!SkyBlock.getPlugin().getIslandHandler().getIslandAt(player.getLocation()).isMember(player.getUniqueId())) {
             player.sendMessage(ChatColor.RED + "You can only set your island home in your island's land.");
             return;
         }

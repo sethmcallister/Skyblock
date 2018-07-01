@@ -19,9 +19,6 @@ import org.pirateislands.skyblock.goose.GooseCommand;
 
 import java.util.*;
 
-/**
- * Created by Matt on 17/04/2017.
- */
 public class IslandTopCommand extends GooseCommand implements Listener {
     private Inventory islandTop = Bukkit.createInventory(null, 36, "Top Islands");
 
@@ -33,7 +30,7 @@ public class IslandTopCommand extends GooseCommand implements Listener {
     public static List<Map.Entry<Island, Integer>> getTopIslands() {
         Map<Island, Integer> islands = new HashMap<>();
 
-        for (Island island : SkyBlock.getPlugin().getIslandRegistry().getPlayerIslands()) {
+        for (Island island : SkyBlock.getPlugin().getIslandHandler().getPlayerIslands()) {
             if (island == null)
                 continue;
 
@@ -59,8 +56,8 @@ public class IslandTopCommand extends GooseCommand implements Listener {
         Inventory inventory = Bukkit.createInventory(null, 36, ChatColor.WHITE + "Top Islands");
 
         int max = 10;
-        if (SkyBlock.getPlugin().getIslandRegistry().playerIslands.size() < 10) {
-            max = SkyBlock.getPlugin().getIslandRegistry().playerIslands.size();
+        if (SkyBlock.getPlugin().getIslandHandler().playerIslands.size() < 10) {
+            max = SkyBlock.getPlugin().getIslandHandler().playerIslands.size();
         }
 
         int index = 0;

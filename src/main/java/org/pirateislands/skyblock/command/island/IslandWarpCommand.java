@@ -58,7 +58,7 @@ public class IslandWarpCommand extends GooseCommand {
     }
 
     private void doWarp(final Player sender, final OfflinePlayer target, final boolean force) {
-        Island island = SkyBlock.getPlugin().getIslandRegistry().findByUniqueId(target.getUniqueId());
+        Island island = SkyBlock.getPlugin().getIslandHandler().findByUniqueId(target.getUniqueId());
         if (island == null) {
             sender.sendMessage(ChatColor.RED + String.format("No Island with the Owner or Member of '%s' could be found.", target.getName()));
             return;
