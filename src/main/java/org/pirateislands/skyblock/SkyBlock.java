@@ -44,7 +44,6 @@ public class SkyBlock extends PluginModule {
     private ServerConfig serverConfig;
     private GooseHandler gooseHandler;
     private Economy economy;
-    private Tabbed tabbed;
     private World islandWorld;
     private GridUtil gridUtil;
     private CombatLogHandler combatLogHandler;
@@ -72,7 +71,6 @@ public class SkyBlock extends PluginModule {
         serverConfig.load();
 
         this.gooseHandler = new GooseHandler();
-        this.tabbed = new Tabbed(API.getPlugin());
         this.gridUtil = new GridUtil(100000);
         this.combatLogHandler = new CombatLogHandler();
         this.timerHandler = new TimerHandler();
@@ -228,10 +226,6 @@ public class SkyBlock extends PluginModule {
 
     public GooseHandler getGooseHandler() {
         return gooseHandler;
-    }
-
-    public Tabbed getTabbed() {
-        return tabbed;
     }
 
     public GridUtil getGridUtil() {

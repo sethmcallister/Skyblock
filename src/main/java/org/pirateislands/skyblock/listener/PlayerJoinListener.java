@@ -38,7 +38,6 @@ public class PlayerJoinListener implements Listener {
         }
         user.update();
 
-
         player.sendMessage(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "-----------------------------------------------------");
         player.sendMessage(" ");
         player.sendMessage(ChatColor.YELLOW + " Welcome " + ChatColor.WHITE + player.getName() + ChatColor.YELLOW + " to " + "Pirate" + ChatColor.WHITE + "Islands");
