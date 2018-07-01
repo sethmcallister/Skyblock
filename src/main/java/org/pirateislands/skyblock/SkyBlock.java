@@ -5,7 +5,6 @@ import com.islesmc.islandapi.IslandAPI;
 import com.islesmc.islandapi.dao.RedisIslandDAO;
 import com.islesmc.modules.api.API;
 import com.islesmc.modules.api.module.PluginModule;
-import com.keenant.tabbed.Tabbed;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
