@@ -113,9 +113,9 @@ public class SkyBlock extends PluginModule {
         return economy != null;
     }
 
-    public RegionHandler getRegionHandler() {
-        return regionHandler;
-    }
+//    public RegionHandler getRegionHandler() {
+//        return regionHandler;
+//    }
 
     public World getIslandWorld() {
         return islandWorld;

@@ -19,18 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockPhysicsListener implements Listener {
-    private static List<Material> nonMovableMaterialsByPiston = new ArrayList<>();
     private final int maxBlockLength = 64;
     private List<Block> preventMoving = new ArrayList<>();
 
-    public static boolean isBlockMovableByPiston(Block block) {
-        for (Material m : nonMovableMaterialsByPiston) {
-            if (block.getType() == m) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     @EventHandler
     public void onBlockPhyscis(final BlockPhysicsEvent event) {
@@ -68,7 +59,7 @@ public class BlockPhysicsListener implements Listener {
         if (block.getType() == Material.PISTON_STICKY_BASE) {
             Block tmp = block.getRelative(e.getDirection());
             Block tmp2 = tmp.getRelative(e.getDirection());
-            if ((tmp2.getType() != Material.AIR) && (isBlockMovableByPiston(tmp2))) {
+            if ((tmp2.getType() != Material.AIR)) {
                 new DelayedBlockRetractTask(tmp, tmp2).runTaskLater(API.getPlugin(), 5L);
             }
         }
@@ -82,13 +73,9 @@ public class BlockPhysicsListener implements Listener {
         Location toLocation;
         if (block != null) {
             if (block.getType() != Material.AIR) {
-                if (isBlockMovableByPiston(block)) {
-                    Block tmpBlock = block.getRelative(blockFace);
-                    if (moveBlock(tmpBlock.getLocation(), blockFace, ++movedBlocks)) {
-                        tmpBlock.setType(block.getType());
-                    } else {
-                        return false;
-                    }
+                Block tmpBlock = block.getRelative(blockFace);
+                if (moveBlock(tmpBlock.getLocation(), blockFace, ++movedBlocks)) {
+                    tmpBlock.setType(block.getType());
                 } else {
                     return false;
                 }

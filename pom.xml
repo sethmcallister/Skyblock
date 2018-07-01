@@ -32,7 +32,6 @@
                             <artifactSet>
                                 <includes>
                                     <include>com.google.code.gson:gson</include>
-                                    <include>com.keenant:tabbed</include>
                                     <include>net.techcable:npclib</include>
                                     <include>org.pirateislands:island-api</include>
                                 </includes>
@@ -101,11 +100,6 @@
             <groupId>xyz.sethy</groupId>
             <artifactId>CommandHandler</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.keenant</groupId>
-            <artifactId>tabbed</artifactId>
-            <version>1.7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.milkbowl.vault</groupId>

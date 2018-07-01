@@ -67,9 +67,10 @@ public class SetIslandSizeCommand extends BukkitCommand {
         Location min = new Location(SkyBlock.getPlugin().getIslandWorld(), minX, minY, minZ);
         Location max = new Location(SkyBlock.getPlugin().getIslandWorld(), maxX, maxY, maxZ);
 
-        SkyBlock.getPlugin().getRegionHandler().deleteRegion(island.getContainer());
+//        SkyBlock.getPlugin().getRegionHandler().deleteRegion(island.getContainer());
 
-        Region container = SkyBlock.getPlugin().getRegionHandler().createRegion(island.getName(), min, max);
+//        Region container = SkyBlock.getPlugin().getRegionHandler().createRegion(island.getName(), min, max);
+        Region container = new Region(island.getName(), GooseLocationHelper.fromLocation(min), GooseLocationHelper.fromLocation(max));
         island.setContainer(container);
         island.save();
         sender.sendMessage(ChatColor.YELLOW + String.format("You have set %s's island size to %s.", args[0], args[1]));

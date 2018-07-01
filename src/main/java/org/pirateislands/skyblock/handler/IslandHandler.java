@@ -519,7 +519,7 @@ public class IslandHandler {
 //        }
 
 
-        SkyBlock.getPlugin().getRegionHandler().deleteRegion(island.getContainer());
+//        SkyBlock.getPlugin().getRegionHandler().deleteRegion(island.getContainer());
         playerIslands.remove(island);
     }
 

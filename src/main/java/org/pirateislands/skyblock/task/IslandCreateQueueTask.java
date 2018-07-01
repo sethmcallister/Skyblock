@@ -90,7 +90,9 @@ public class IslandCreateQueueTask extends BukkitRunnable {
             Location min = new Location(SkyBlock.getPlugin().getIslandWorld(), minX, minY, minZ);
             Location max = new Location(SkyBlock.getPlugin().getIslandWorld(), maxX, maxY, maxZ);
 
-            Region container = SkyBlock.getPlugin().getRegionHandler().createRegion(island.getName(), min, max);
+
+//            Region container = SkyBlock.getPlugin().getRegionHandler().createRegion(island.getName(), min, max);
+            Region container = new Region(island.getName(), GooseLocationHelper.fromLocation(min), GooseLocationHelper.fromLocation(max));
             island.setContainer(container);
             island.setMembers(new ArrayList<>());
             island.setExpelled(new ArrayList<>());
