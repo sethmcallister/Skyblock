@@ -33,7 +33,7 @@ public class GooseHandler implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                GooseScoreboard gooseScoreboard = new GooseScoreboard(scoreboard, SkyBlock.getPlugin().getServerConfig().getScoreboardName());
+                GooseScoreboard gooseScoreboard = new GooseScoreboard(scoreboard, SkyBlock.getInstance().getServerConfig().getScoreboardName());
                 scoreboards.put(event.getPlayer(), gooseScoreboard);
             }
         }.runTaskAsynchronously(API.getPlugin());

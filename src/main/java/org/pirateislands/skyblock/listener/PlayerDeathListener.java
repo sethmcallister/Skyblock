@@ -38,10 +38,10 @@ public class PlayerDeathListener implements Listener {
         deaths++;
         killedProfile.set("deaths", deaths);
 
-        Timer timer = SkyBlock.getPlugin().getTimerHandler().getTimer(killed, TimerType.COMBAT_TAG);
+        Timer timer = SkyBlock.getInstance().getTimerHandler().getTimer(killed, TimerType.COMBAT_TAG);
         if (timer != null && timer.getTime() > 0) {
             timer.setTime(0L);
-            SkyBlock.getPlugin().getTimerHandler().getPlayerTimers(killed).remove(timer);
+            SkyBlock.getInstance().getTimerHandler().getPlayerTimers(killed).remove(timer);
         }
 
         killedProfile.set("killstreak", 0D);

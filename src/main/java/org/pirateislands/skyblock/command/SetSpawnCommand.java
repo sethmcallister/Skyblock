@@ -24,8 +24,8 @@ public class SetSpawnCommand extends BukkitCommand {
 
         Location loc = player.getLocation();
 
-        SkyBlock.getPlugin().getServerConfig().setSpawnLocation(GooseLocationHelper.fromLocation(loc));
-        SkyBlock.getPlugin().getServerConfig().save();
+        SkyBlock.getInstance().getServerConfig().setSpawnLocation(GooseLocationHelper.fromLocation(loc));
+        SkyBlock.getInstance().getServerConfig().save();
         player.sendMessage(ChatColor.YELLOW + "You have successfully set the server's spawn.");
         return true;
     }

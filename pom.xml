@@ -60,6 +60,10 @@
             <id>techcable-repo</id>
             <url>http://repo.techcable.net/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>inventive-repo</id>
+            <url>https://repo.inventivetalent.org/content/repositories/releases</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -105,6 +109,11 @@
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>hologramapi</artifactId>
+            <version>1.4.0</version>
         </dependency>
     </dependencies>
 </project>

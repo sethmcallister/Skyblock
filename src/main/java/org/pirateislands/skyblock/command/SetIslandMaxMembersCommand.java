@@ -34,7 +34,7 @@ public class SetIslandMaxMembersCommand extends BukkitCommand {
             sender.sendMessage(ChatColor.RED + "No player with the name or UUID of '%s' is online.");
             return true;
         }
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer((Player) target);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer((Player) target);
         if (island == null) {
             sender.sendMessage(ChatColor.RED + String.format("No island for the player '%s' could be found.", args[0]));
             return true;

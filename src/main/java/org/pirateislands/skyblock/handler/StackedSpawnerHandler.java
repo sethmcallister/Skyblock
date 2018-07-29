@@ -1,50 +1,41 @@
-package org.pirateislands.skyblock.configuration;
+package org.pirateislands.skyblock.handler;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-import org.bukkit.Material;
+import org.bukkit.Location;
 import org.pirateislands.skyblock.SkyBlock;
+import org.pirateislands.skyblock.dto.StackedSpawner;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class OreGenerationConfig {
+public class StackedSpawnerHandler {
     private final transient Gson gson;
     private final transient String fileName;
-    private final Map<Material, Double> generationMap;
+    private List<StackedSpawner> stackedSpawners;
 
-    public OreGenerationConfig() {
+    public StackedSpawnerHandler() {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
-        this.generationMap = new HashMap<>();
-        this.generationMap.put(Material.COBBLESTONE, 35.0);
-        this.generationMap.put(Material.COAL_ORE, 15.0);
-        this.generationMap.put(Material.IRON_ORE, 10.0);
-        this.generationMap.put(Material.DIAMOND_ORE, 5.0);
-        this.generationMap.put(Material.LAPIS_ORE, 10.0);
-        this.generationMap.put(Material.REDSTONE_ORE, 10.0);
-        this.generationMap.put(Material.GOLD_ORE, 10.0);
-        this.generationMap.put(Material.EMERALD_ORE, 5.0);
-        this.fileName = SkyBlock.getInstance().getModuleDir() + File.separator + "ores.json";
+        this.fileName = SkyBlock.getInstance().getModuleDir() + File.separator + "spawners.json";
+        this.stackedSpawners = new ArrayList<>();
     }
 
-    public Map<Material, Double> getGenerationMap() {
-        return generationMap;
+    public StackedSpawner findByLocation(final Location location) {
+        return this.stackedSpawners.stream().filter(stackedSpawner -> stackedSpawner.getLocation().equals(location)).findFirst().orElse(null);
     }
 
-    public Double getValue(final Material key) {
-        return generationMap.get(key);
+    public List<StackedSpawner> findAll() {
+        return this.stackedSpawners;
     }
 
     public void save() {
-        String json = this.gson.toJson(generationMap);
+        String json = this.gson.toJson(this);
         File file = new File(this.fileName);
         if (!file.exists()) {
             try {
@@ -61,7 +52,7 @@ public class OreGenerationConfig {
         }
     }
 
-    public void loadValues() {
+    public void load() {
         File file = new File(this.fileName);
         if (!file.exists()) {
             try {
@@ -74,15 +65,16 @@ public class OreGenerationConfig {
 
             try (FileReader fileReader = new FileReader(this.fileName)) {
                 JsonElement element = parser.parse(fileReader);
-                Type type = new TypeToken<Map<Material, Double>>() {
-                }.getType();
-                Map<Material, Double> ores = this.gson.fromJson(element, type);
-                if (ores == null) {
+                StackedSpawnerHandler stackedSpawnerHandler = this.gson.fromJson(element, StackedSpawnerHandler.class);
+                if (stackedSpawnerHandler == null) {
                     save();
                     return;
                 }
 
-                ores.forEach(this.generationMap::put);
+                if (stackedSpawnerHandler.stackedSpawners == null)
+                    return;
+
+                this.stackedSpawners = stackedSpawnerHandler.stackedSpawners;
             } catch (IOException e) {
                 e.printStackTrace();
             }

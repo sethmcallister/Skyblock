@@ -25,7 +25,7 @@ public class AsyncPlayerChatListener implements Listener {
             CHAT_MODE_MAP.put(event.getPlayer().getUniqueId(), ChatMode.PUBLIC);
         }
 
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(event.getPlayer());
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(event.getPlayer());
         if (island == null)
             chatMode = ChatMode.PUBLIC;
 

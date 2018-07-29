@@ -18,7 +18,7 @@ public class BalanceCommand extends BukkitCommand {
     @Override
     public boolean execute(CommandSender sender, String s, String[] args) {
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.YELLOW + "Balance: " + ChatColor.WHITE + "$" + SkyBlock.getPlugin().getEconomy().getBalance((Player) sender));
+            sender.sendMessage(ChatColor.YELLOW + "Balance: " + ChatColor.WHITE + "$" + SkyBlock.getInstance().getEconomy().getBalance((Player) sender));
             return true;
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
@@ -26,7 +26,7 @@ public class BalanceCommand extends BukkitCommand {
             sender.sendMessage(ChatColor.RED + String.format("No player with the name or UUID '%s' was found.", args[0]));
             return true;
         }
-        sender.sendMessage(ChatColor.YELLOW + target.getName() + "'s Balance: " + ChatColor.WHITE + "$" + SkyBlock.getPlugin().getEconomy().getBalance(target));
+        sender.sendMessage(ChatColor.YELLOW + target.getName() + "'s Balance: " + ChatColor.WHITE + "$" + SkyBlock.getInstance().getEconomy().getBalance(target));
         return true;
     }
 }

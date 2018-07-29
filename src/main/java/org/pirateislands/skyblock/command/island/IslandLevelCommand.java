@@ -15,14 +15,14 @@ public class IslandLevelCommand extends GooseCommand {
 
     @Override
     public void execute(Player player, String[] strings) {
-        if (!SkyBlock.getPlugin().getIslandHandler().hasIsland(player)) {
+        if (!SkyBlock.getInstance().getIslandHandler().hasIsland(player)) {
             player.sendMessage(ChatColor.RED + "You do not currently have an island.");
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(player);
 
-        SkyBlock.getPlugin().getIslandHandler().calculateIslandLevel(island);
+        SkyBlock.getInstance().getIslandHandler().calculateIslandLevel(island);
         MessageUtil.sendServerTheme(player, ChatColor.YELLOW + String.format("Your island is currently level %s.", island.getIslandLevel()));
     }
 }

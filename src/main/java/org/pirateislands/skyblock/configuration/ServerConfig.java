@@ -26,7 +26,7 @@ public class ServerConfig {
     private ServerType serverType;
 
     public ServerConfig() {
-        this.fileName = SkyBlock.getPlugin().getModuleDir() + File.separator + "config.json";
+        this.fileName = SkyBlock.getInstance().getModuleDir() + File.separator + "config.json";
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.spawn = new GooseLocation(Bukkit.getWorld("Spawn").getUID(), 0d, 0d, 0d, 0d);
         this.playersJoined = 0;
@@ -106,7 +106,7 @@ public class ServerConfig {
     }
 
     public void incrementPlayersJoined() {
-        this.playersJoined = +1;
+        this.playersJoined += 1;
     }
 
     public String getScoreboardName() {

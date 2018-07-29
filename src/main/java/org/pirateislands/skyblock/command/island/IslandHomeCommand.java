@@ -24,7 +24,7 @@ public class IslandHomeCommand extends GooseCommand {
             player.sendMessage(ChatColor.RED + "Usage: /island home");
             return;
         }
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(player);
         if (island == null) {
             player.sendMessage(ChatColor.RED + "You do not have an island to teleport to.");
             return;

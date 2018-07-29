@@ -17,13 +17,8 @@ public class IslandExpelCommand extends GooseCommand {
 
     @Override
     public void execute(Player player, String[] args) {
-        if (SkyBlock.getPlugin().getServerConfig().getServerType() == ServerType.ISLES) {
-            player.sendMessage(ChatColor.RED + "That cannot be used on this realm!");
-            return;
-        }
-
         if (args.length != 1) {
-            player.sendMessage(ChatColor.RED + "You must expel a player: /is ban <player>");
+            player.sendMessage(ChatColor.RED + "Usage: /is ban <player>");
             return;
         }
 
@@ -38,7 +33,7 @@ public class IslandExpelCommand extends GooseCommand {
     }
 
     private void handleExpell(Player owner, Player player) {
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(owner);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(owner);
 
         if (!island.getOwner().equals(owner.getUniqueId())) {
             owner.sendMessage(ChatColor.RED + "You cannot ban a player!");
@@ -61,13 +56,13 @@ public class IslandExpelCommand extends GooseCommand {
         owner.sendMessage(ChatColor.YELLOW + "You have banned " + player.getName());
         player.sendMessage(ChatColor.YELLOW + "You have been banned from " + island.getName() + "'s island");
 
-        Island currentIsland = SkyBlock.getPlugin().getIslandHandler().getIslandAt(player.getLocation());
+        Island currentIsland = SkyBlock.getInstance().getIslandHandler().getIslandAt(player.getLocation());
 
         if (currentIsland == null || currentIsland != island) {
             return;
         }
 
-        player.teleport(SkyBlock.getPlugin().getServerConfig().getSpawnLocation());
+        player.teleport(SkyBlock.getInstance().getServerConfig().getSpawnLocation());
         player.sendMessage(ChatColor.YELLOW + "You can no longer be on that island.");
     }
 }

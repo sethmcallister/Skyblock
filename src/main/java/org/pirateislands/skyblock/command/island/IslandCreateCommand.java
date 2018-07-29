@@ -53,7 +53,7 @@ public class IslandCreateCommand extends GooseCommand {
             return;
         }
 
-        if (SkyBlock.getPlugin().getIslandHandler().hasIsland(player)) {
+        if (SkyBlock.getInstance().getIslandHandler().hasIsland(player)) {
             player.sendMessage(ChatColor.RED + "You already have an island.");
             return;
         }

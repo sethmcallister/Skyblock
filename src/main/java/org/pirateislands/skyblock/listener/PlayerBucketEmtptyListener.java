@@ -12,18 +12,13 @@ import org.pirateislands.skyblock.goose.GooseLocationHelper;
 public class PlayerBucketEmtptyListener implements Listener {
     @EventHandler
     public void onSignChange(final SignChangeEvent event) {
-        Location location = event.getBlock().getLocation();
-
-        if (location.getWorld() != SkyBlock.getPlugin().getIslandWorld()) return;
-
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandAt(location);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandAt(event.getBlock().getLocation());
         if (island == null)
             return;
 
-        if (!event.getLine(0).equalsIgnoreCase("[welcome]"))
+        if (island.isAllowed(event.getPlayer().getUniqueId()))
             return;
 
-        island.setWarpLocation(GooseLocationHelper.fromLocation(location));
-        event.setLine(0, ChatColor.YELLOW + "[Welcome]");
+        event.setCancelled(true);
     }
 }

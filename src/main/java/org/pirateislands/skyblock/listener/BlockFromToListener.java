@@ -22,17 +22,16 @@ public class BlockFromToListener implements Listener {
 
     private final static List<BlockFace> FACES = Arrays.asList(BlockFace.SELF, BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
     private final Map<Material, Double> chances;
-    private SkyBlock plugin = SkyBlock.getPlugin();
+    private SkyBlock plugin = SkyBlock.getInstance();
     private Random random = new Random();
 
     public BlockFromToListener() {
-        this.chances = SkyBlock.getPlugin().getOreGenerationConfig().getGenerationMap();
+        this.chances = SkyBlock.getInstance().getOreGenerationConfig().getGenerationMap();
     }
 
     @EventHandler
     public void onBlockForm(BlockFormEvent event) {
         if (event.getNewState().getBlock().getType() == Material.COBBLESTONE || event.getNewState().getBlock().getType() == Material.OBSIDIAN) {
-            System.out.println("Form event called");
         }
     }
 
@@ -58,10 +57,10 @@ public class BlockFromToListener implements Listener {
         if (event.getBlock() == null)
             return;
 
-        if (SkyBlock.getPlugin().getIslandWorld() == null)
+        if (SkyBlock.getInstance().getIslandWorld() == null)
             return;
 
-        if (!event.getBlock().getWorld().getName().equalsIgnoreCase(SkyBlock.getPlugin().getIslandWorld().getName())) {
+        if (!event.getBlock().getWorld().getName().equalsIgnoreCase(SkyBlock.getInstance().getIslandWorld().getName())) {
             return;
         }
 

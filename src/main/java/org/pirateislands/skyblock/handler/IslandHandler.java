@@ -34,7 +34,7 @@ public class IslandHandler {
 
     private final int baseIslandSize = 80;
 
-    private final File islandDir = new File(SkyBlock.getPlugin().getModuleDir().toString(), "islands");
+    private final File islandDir = new File(SkyBlock.getInstance().getModuleDir().toString(), "islands");
 
     private final Map<UUID, Island> islandInvites = new HashMap<>();
 
@@ -156,7 +156,7 @@ public class IslandHandler {
 //                }
 //
 //                Island island = new Island(ownerID, spawn, type);
-//                island.setContainer(SkyBlock.getPlugin().getRegionHandler().createRegion(island.getName(), min, max));
+//                island.setContainer(SkyBlock.getInstance().getRegionHandler().createRegion(island.getName(), min, max));
 //                island.setMembers(members);
 //                island.setMaxPlayers(maxPlayers);
 //                island.setBankBalance(bankBalance);
@@ -166,23 +166,23 @@ public class IslandHandler {
 //            }
 //        }
         if (playerIslands.isEmpty()) {
-            this.lastIsland = new Location(SkyBlock.getPlugin().getIslandWorld(), 0, 100, 0);
+            this.lastIsland = new Location(SkyBlock.getInstance().getIslandWorld(), 0, 100, 0);
         } else {
-            if (SkyBlock.getPlugin() == null) {
+            if (SkyBlock.getInstance() == null) {
                 System.out.println("Skyblock instance null");
             }
 
-            if (SkyBlock.getPlugin().getServerConfig() == null) {
+            if (SkyBlock.getInstance().getServerConfig() == null) {
                 System.out.println("config null");
             }
 
-            if (SkyBlock.getPlugin().getServerConfig().getLastIslandLocation() == null) {
-                this.lastIsland = new Location(SkyBlock.getPlugin().getIslandWorld(), 0, 100, 0);
+            if (SkyBlock.getInstance().getServerConfig().getLastIslandLocation() == null) {
+                this.lastIsland = new Location(SkyBlock.getInstance().getIslandWorld(), 0, 100, 0);
                 return;
             }
 
 
-            this.lastIsland = GooseLocationHelper.toLocation(SkyBlock.getPlugin().getServerConfig().getLastIslandLocation());
+            this.lastIsland = GooseLocationHelper.toLocation(SkyBlock.getInstance().getServerConfig().getLastIslandLocation());
         }
     }
 
@@ -243,7 +243,7 @@ public class IslandHandler {
 //            for (int y = 0; y < 256; y++) {
 //                for (int z = minZ; z < maxZ; z++) {
 //
-//                    Block block = SkyBlock.getPlugin().getIslandWorld().getBlockAt(x, y, z);
+//                    Block block = SkyBlock.getInstance().getIslandWorld().getBlockAt(x, y, z);
 //                    if (block.getType().equals(Material.BARRIER))
 //                        block.setType(Material.AIR);
 //
@@ -337,7 +337,7 @@ public class IslandHandler {
 //        }
 //
 //        Location center = findEmptySpace();
-////        Location center = nextIslandLocation(lastIsland == null ? new Location(SkyBlock.getPlugin().getIslandWorld(), 0, 100, 0) : lastIsland);
+////        Location center = nextIslandLocation(lastIsland == null ? new Location(SkyBlock.getInstance().getIslandWorld(), 0, 100, 0) : lastIsland);
 //
 //        Island island = new Island(player.getUniqueId(), center, type);
 //        island.setSize(baseIslandSize);
@@ -351,10 +351,10 @@ public class IslandHandler {
 //        int maxZ = center.getBlockZ() + island.getType().getSize() / 2;
 //
 //
-//        Location min = new Location(SkyBlock.getPlugin().getIslandWorld(), minX, minY, minZ);
-//        Location max = new Location(SkyBlock.getPlugin().getIslandWorld(), maxX, maxY, maxZ);
+//        Location min = new Location(SkyBlock.getInstance().getIslandWorld(), minX, minY, minZ);
+//        Location max = new Location(SkyBlock.getInstance().getIslandWorld(), maxX, maxY, maxZ);
 //
-//        Region container = SkyBlock.getPlugin().getRegionHandler().createRegion(island.getName(), min, max);
+//        Region container = SkyBlock.getInstance().getRegionHandler().createRegion(island.getName(), min, max);
 //        island.setContainer(container);
 //        island.setMembers(new ArrayList<>());
 //        island.setIslandLevel(0);
@@ -386,7 +386,7 @@ public class IslandHandler {
 //        island.save();
 //
 //        try {
-//            SkyBlock.getPlugin().getSchematicUtil().pasteSchematic(type.name().toLowerCase() + ".schematic", SkyBlock.getPlugin().getIslandWorld(), center.getBlockX(), 100, center.getBlockZ());
+//            SkyBlock.getInstance().getSchematicUtil().pasteSchematic(type.name().toLowerCase() + ".schematic", SkyBlock.getInstance().getIslandWorld(), center.getBlockX(), 100, center.getBlockZ());
 //        } catch (DataException | IOException e) {
 //            e.printStackTrace();
 //        }
@@ -400,7 +400,7 @@ public class IslandHandler {
 
     public Location findEmptySpace() {
         if (playerIslands.isEmpty()) {
-            return new Location(SkyBlock.getPlugin().getIslandWorld(), 0, 100, 0);
+            return new Location(SkyBlock.getInstance().getIslandWorld(), 0, 100, 0);
         }
 
         Location base = null;
@@ -480,9 +480,9 @@ public class IslandHandler {
     public void deleteIsland(Player player, Island island) {
 
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            if (pl.getWorld().getName().equalsIgnoreCase(SkyBlock.getPlugin().getIslandWorld().getName())) {
+            if (pl.getWorld().getName().equalsIgnoreCase(SkyBlock.getInstance().getIslandWorld().getName())) {
                 if (isInIslandRegion(island, pl.getLocation())) {
-                    pl.teleport(SkyBlock.getPlugin().getServerConfig().getSpawnLocation());
+                    pl.teleport(SkyBlock.getInstance().getServerConfig().getSpawnLocation());
                     MessageUtil.sendServerTheme(pl, ChatColor.RED + "The island you where in was deleted, you are now in spawn.");
                 }
             }
@@ -490,7 +490,7 @@ public class IslandHandler {
 
         IslandAPI.getRedisIslandDAO().delete(island);
 
-//        File file = new File(SkyBlock.getPlugin().getModuleDir().toString() + File.separator + "islands" + File.separator + island.getOwner().toString().replace("-", "") + ".json");
+//        File file = new File(SkyBlock.getInstance().getModuleDir().toString() + File.separator + "islands" + File.separator + island.getOwner().toString().replace("-", "") + ".json");
 //
 //        if (!file.exists()) {
 //            return;
@@ -512,14 +512,14 @@ public class IslandHandler {
 //
 //                for (int z = minZ; z < maxZ; z++) {
 //
-//                    Block block = SkyBlock.getPlugin().getIslandWorld().getBlockAt(x, y, z);
+//                    Block block = SkyBlock.getInstance().getIslandWorld().getBlockAt(x, y, z);
 //                    block.setType(Material.AIR);
 //                }
 //            }
 //        }
 
 
-//        SkyBlock.getPlugin().getRegionHandler().deleteRegion(island.getContainer());
+//        SkyBlock.getInstance().getRegionHandler().deleteRegion(island.getContainer());
         playerIslands.remove(island);
     }
 
@@ -557,7 +557,7 @@ public class IslandHandler {
         final int x = last.getBlockX();
         final int z = last.getBlockZ();
 
-        final int spacing = (SkyBlock.getPlugin().getServerConfig().getServerType() == ServerType.ISLES ? 450 : 1000);
+        final int spacing = (SkyBlock.getInstance().getServerConfig().getServerType() == ServerType.ISLES ? 450 : 1000);
 
         final Location next = last;
         if (x < z) {

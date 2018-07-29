@@ -23,7 +23,7 @@ public class PlayerInteractListener implements Listener {
         Player player = event.getPlayer();
         if (player.getPlayer().getItemInHand().getType().equals(Material.ENDER_PEARL)) {
             if ((event.getAction() == Action.RIGHT_CLICK_AIR) || (event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-                Timer timer = SkyBlock.getPlugin().getTimerHandler().getTimer(player, TimerType.ENDERPEARL);
+                Timer timer = SkyBlock.getInstance().getTimerHandler().getTimer(player, TimerType.ENDERPEARL);
                 if (timer != null && timer.getTime() > 0) {
                     long millisLeft = timer.getTime();
                     double value = millisLeft / 1000.0D;
@@ -33,7 +33,7 @@ public class PlayerInteractListener implements Listener {
                     event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou cannot use this for another &c&l" + sec + "&c seconds."));
                     return;
                 }
-                SkyBlock.getPlugin().getTimerHandler().addTimer(player, new DefaultTimer(TimerType.ENDERPEARL, 16000 + System.currentTimeMillis(), player));
+                SkyBlock.getInstance().getTimerHandler().addTimer(player, new DefaultTimer(TimerType.ENDERPEARL, 16000 + System.currentTimeMillis(), player));
             }
         }
     }
@@ -88,13 +88,13 @@ public class PlayerInteractListener implements Listener {
 
         Block block = event.getClickedBlock();
 
-        if (block.getWorld() != SkyBlock.getPlugin().getIslandWorld())
+        if (block.getWorld() != SkyBlock.getInstance().getIslandWorld())
             return;
 
         if (!isIntractable(block))
             return;
 
-        Island conflict = SkyBlock.getPlugin().getIslandHandler().getIslandAt(block.getLocation());
+        Island conflict = SkyBlock.getInstance().getIslandHandler().getIslandAt(block.getLocation());
 
         if (conflict == null)
             return;

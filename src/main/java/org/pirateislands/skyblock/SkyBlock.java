@@ -6,6 +6,8 @@ import com.islesmc.islandapi.dao.RedisIslandDAO;
 import com.islesmc.modules.api.API;
 import com.islesmc.modules.api.module.PluginModule;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import de.inventivegames.hologram.Hologram;
+import de.inventivegames.hologram.HologramAPI;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -16,11 +18,14 @@ import org.pirateislands.skyblock.command.island.*;
 import org.pirateislands.skyblock.configuration.OreGenerationConfig;
 import org.pirateislands.skyblock.configuration.ServerConfig;
 import org.pirateislands.skyblock.configuration.ServerType;
+import org.pirateislands.skyblock.dto.StackedSpawner;
 import org.pirateislands.skyblock.goose.GooseCommandHandler;
 import org.pirateislands.skyblock.goose.GooseHandler;
 import org.pirateislands.skyblock.goose.GooseTicker;
 import org.pirateislands.skyblock.handler.CombatLogHandler;
 import org.pirateislands.skyblock.handler.IslandHandler;
+import org.pirateislands.skyblock.handler.QuestHandler;
+import org.pirateislands.skyblock.handler.StackedSpawnerHandler;
 import org.pirateislands.skyblock.listener.*;
 import org.pirateislands.skyblock.region.RegionHandler;
 import org.pirateislands.skyblock.task.BackupTask;
@@ -47,14 +52,8 @@ public class SkyBlock extends PluginModule {
     private GridUtil gridUtil;
     private CombatLogHandler combatLogHandler;
     private TimerHandler timerHandler;
-
-    public static synchronized SkyBlock getPlugin() {
-        return plugin;
-    }
-
-    private static synchronized void setPlugin(final SkyBlock skyBlock) {
-        plugin = skyBlock;
-    }
+    private StackedSpawnerHandler stackedSpawnerHandler;
+    private QuestHandler questHandler;
 
     @Override
     public void onEnable() {
@@ -73,6 +72,12 @@ public class SkyBlock extends PluginModule {
         this.gridUtil = new GridUtil(100000);
         this.combatLogHandler = new CombatLogHandler();
         this.timerHandler = new TimerHandler();
+        this.stackedSpawnerHandler = new StackedSpawnerHandler();
+        this.stackedSpawnerHandler.load();
+
+        this.stackedSpawnerHandler.findAll().forEach(StackedSpawner::createHologram);
+
+        this.questHandler = new QuestHandler();
 
         new BukkitRunnable() {
             @Override
@@ -99,6 +104,14 @@ public class SkyBlock extends PluginModule {
         new BackupTask().runTaskTimer(API.getPlugin(), TimeUnit.MINUTES.toSeconds(25L) * 20L, TimeUnit.MINUTES.toSeconds(25L) * 20L);
     }
 
+    public static SkyBlock getInstance() {
+        return plugin;
+    }
+
+    private static synchronized void setPlugin(final SkyBlock skyBlock) {
+        plugin = skyBlock;
+    }
+
     private boolean setupEconomy() {
         if (API.getPlugin().getServer().getPluginManager().getPlugin("Vault") == null) {
             System.out.println("no vault");
@@ -113,16 +126,18 @@ public class SkyBlock extends PluginModule {
         return economy != null;
     }
 
-//    public RegionHandler getRegionHandler() {
-//        return regionHandler;
-//    }
-
     public World getIslandWorld() {
         return islandWorld;
     }
 
     @Override
     public void onDisable() {
+        this.stackedSpawnerHandler.save();
+        for (StackedSpawner stackedSpawner : this.stackedSpawnerHandler.findAll()) {
+            stackedSpawner.getHologram().despawn();
+            HologramAPI.removeHologram(stackedSpawner.getHologram());
+        }
+
         islandHandler.disable();
         getServerConfig().save();
     }
@@ -149,7 +164,7 @@ public class SkyBlock extends PluginModule {
         registerEvent(new AsyncPlayerChatListener());
         registerEvent(new BlockBreakListener());
         registerEvent(new BlockFromToListener());
-        registerEvent(new BlockPhysicsListener());
+//        registerEvent(new BlockPhysicsListener());
         registerEvent(new BlockPlaceListener());
         registerEvent(new CreatureSpawnListener());
         registerEvent(new EntityDamageByEntityListener());
@@ -165,8 +180,7 @@ public class SkyBlock extends PluginModule {
         registerEvent(new PlayerRespawnListener());
         registerEvent(new PlayerTeleportListener());
         registerEvent(new SignChangeListener());
-
-        new FlyCheckTask().runTaskTimerAsynchronously(API.getPlugin(), 1L, 5L);
+        registerEvent(new SpawnerSpawnListener());
 
 
         GooseCommandHandler commandHandler = new GooseCommandHandler("island", new IslandBaseCommand());
@@ -202,6 +216,7 @@ public class SkyBlock extends PluginModule {
         registerCommand("help", new HelpCommand());
         registerCommand("setislandsize", new SetIslandSizeCommand());
         registerCommand("setmaxmembers", new SetIslandMaxMembersCommand());
+        registerCommand("quests", new QuestsCommad());
     }
 
     public Economy getEconomy() {
@@ -237,5 +252,13 @@ public class SkyBlock extends PluginModule {
 
     public TimerHandler getTimerHandler() {
         return timerHandler;
+    }
+
+    public StackedSpawnerHandler getStackedSpawnerHandler() {
+        return this.stackedSpawnerHandler;
+    }
+
+    public QuestHandler getQuestHandler() {
+        return questHandler;
     }
 }

@@ -16,18 +16,18 @@ public class IslandAcceptCommand extends GooseCommand {
 
     @Override
     public void execute(Player player, String[] strings) {
-        if (!SkyBlock.getPlugin().getIslandHandler().hasInvite(player)) {
+        if (!SkyBlock.getInstance().getIslandHandler().hasInvite(player)) {
             player.sendMessage(ChatColor.RED + "You do not have any pending invites.");
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(player);
         if (island != null) {
             player.sendMessage(ChatColor.RED + "You cannot join this island while you're already in an island.");
             return;
         }
 
-        Island invite = SkyBlock.getPlugin().getIslandHandler().getInviteFor(player);
+        Island invite = SkyBlock.getInstance().getIslandHandler().getInviteFor(player);
 
         invite.getMembers().add(player.getUniqueId());
         player.sendMessage(ChatColor.GREEN + String.format("You have joined %s island.", invite.getName()));
@@ -39,7 +39,7 @@ public class IslandAcceptCommand extends GooseCommand {
         }
 
         owner.sendMessage(ChatColor.GREEN + String.format("%s has accepted your island invite.", player.getName()));
-        SkyBlock.getPlugin().getIslandHandler().getIslandInvites().remove(player.getUniqueId());
+        SkyBlock.getInstance().getIslandHandler().getIslandInvites().remove(player.getUniqueId());
         return;
     }
 }

@@ -19,12 +19,12 @@ public class IslandDeclineCommand extends GooseCommand {
 
     @Override
     public void execute(Player player, String[] strings) {
-        if (!SkyBlock.getPlugin().getIslandHandler().hasInvite(player)) {
+        if (!SkyBlock.getInstance().getIslandHandler().hasInvite(player)) {
             player.sendMessage(ChatColor.RED + "You do not have any pending invitations.");
             return;
         }
 
-        Island invite = SkyBlock.getPlugin().getIslandHandler().getInviteFor(player);
+        Island invite = SkyBlock.getInstance().getIslandHandler().getInviteFor(player);
 
         player.sendMessage(ChatColor.YELLOW + String.format("You have declined %s's invite.", invite.getName()));
         Player owner = Bukkit.getPlayer(invite.getOwner());
@@ -34,7 +34,7 @@ public class IslandDeclineCommand extends GooseCommand {
         }
 
         owner.sendMessage(ChatColor.YELLOW + String.format("%s has declined his invitation to your island.", player.getName()));
-        SkyBlock.getPlugin().getIslandHandler().getIslandInvites().remove(player.getUniqueId());
+        SkyBlock.getInstance().getIslandHandler().getIslandInvites().remove(player.getUniqueId());
         return;
     }
 }

@@ -24,13 +24,13 @@ public class IslandTopCommand extends GooseCommand implements Listener {
 
     public IslandTopCommand() {
         super("top", Lists.newArrayList(), true);
-        SkyBlock.getPlugin().registerEvent(this);
+        SkyBlock.getInstance().registerEvent(this);
     }
 
     public static List<Map.Entry<Island, Integer>> getTopIslands() {
         Map<Island, Integer> islands = new HashMap<>();
 
-        for (Island island : SkyBlock.getPlugin().getIslandHandler().getPlayerIslands()) {
+        for (Island island : SkyBlock.getInstance().getIslandHandler().getPlayerIslands()) {
             if (island == null)
                 continue;
 
@@ -56,8 +56,8 @@ public class IslandTopCommand extends GooseCommand implements Listener {
         Inventory inventory = Bukkit.createInventory(null, 36, ChatColor.WHITE + "Top Islands");
 
         int max = 10;
-        if (SkyBlock.getPlugin().getIslandHandler().playerIslands.size() < 10) {
-            max = SkyBlock.getPlugin().getIslandHandler().playerIslands.size();
+        if (SkyBlock.getInstance().getIslandHandler().playerIslands.size() < 10) {
+            max = SkyBlock.getInstance().getIslandHandler().playerIslands.size();
         }
 
         int index = 0;

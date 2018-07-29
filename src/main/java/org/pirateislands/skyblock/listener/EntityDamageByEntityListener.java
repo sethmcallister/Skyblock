@@ -19,7 +19,7 @@ public class EntityDamageByEntityListener implements Listener {
         Player damaged = (Player) event.getEntity();
         Player damager = (Player) event.getDamager();
 
-        if (damaged.getWorld().getName().equalsIgnoreCase(SkyBlock.getPlugin().getIslandWorld().getName()) && !SkyBlock.getPlugin().getServerConfig().getServerType().equals(ServerType.ISLES)) {
+        if (damaged.getWorld().getName().equalsIgnoreCase(SkyBlock.getInstance().getIslandWorld().getName()) && !SkyBlock.getInstance().getServerConfig().getServerType().equals(ServerType.ISLES)) {
             event.setCancelled(true);
             event.setDamage(0);
         } else if (damaged.getWorld().getName().equalsIgnoreCase("Spawn")) {
@@ -36,7 +36,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         Player damager = (Player) event.getDamager();
 
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandAt(event.getEntity().getLocation());
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandAt(event.getEntity().getLocation());
         if (island == null)
             return;
 
@@ -63,7 +63,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         Player damaged = (Player) event.getEntity();
 
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(damaged);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(damaged);
 
         if (island == null)
             return;

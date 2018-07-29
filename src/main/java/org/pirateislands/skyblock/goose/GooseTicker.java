@@ -22,7 +22,7 @@ public class GooseTicker extends BukkitRunnable {
     private final String primaryColor;
 
     public GooseTicker() {
-        this.primaryColor = SkyBlock.getPlugin().getServerConfig().getPrimaryColor();
+        this.primaryColor = SkyBlock.getInstance().getServerConfig().getPrimaryColor();
     }
 
     public synchronized static String formatTime(long time) {
@@ -59,11 +59,11 @@ public class GooseTicker extends BukkitRunnable {
     @Override
     public synchronized void run() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            GooseScoreboard scoreboard = SkyBlock.getPlugin().getGooseHandler().getScoreboard(player);
+            GooseScoreboard scoreboard = SkyBlock.getInstance().getGooseHandler().getScoreboard(player);
             if (scoreboard == null)
                 continue;
 
-            if (SkyBlock.getPlugin().getEconomy() == null)
+            if (SkyBlock.getInstance().getEconomy() == null)
                 continue;
 
             scoreboard.clear();
@@ -74,8 +74,8 @@ public class GooseTicker extends BukkitRunnable {
             scoreboard.add(translateString("&7&m-----------"), translateString("&7&m-----------"));
 
             if (player.getLocation().getWorld().getName().equalsIgnoreCase("pvp")) {
-                double balance = SkyBlock.getPlugin().getEconomy().getBalance(player);
-                scoreboard.add(translateString(primaryColor + "Balance&7: "), translateString("&f$" + SkyBlock.getPlugin().format(balance)));
+                double balance = SkyBlock.getInstance().getEconomy().getBalance(player);
+                scoreboard.add(translateString(primaryColor + "Balance&7: "), translateString("&f$" + SkyBlock.getInstance().format(balance)));
                 scoreboard.add(translateString(primaryColor + "Kills&7: "), translateString("&f" + profile.getDouble("kills").intValue()));
                 scoreboard.add(translateString(primaryColor + "Deaths&7: "), translateString("&f" + profile.getDouble("deaths").intValue()));
                 if (profile.getDouble("killstreak") != null && profile.getDouble("killstreak") > 0D)
@@ -83,7 +83,7 @@ public class GooseTicker extends BukkitRunnable {
 
                 if (hasAnyTimers(player)) {
                     scoreboard.add("", "");
-                    List<Timer> defaultTimers = SkyBlock.getPlugin().getTimerHandler().getPlayerTimers(player);
+                    List<Timer> defaultTimers = SkyBlock.getInstance().getTimerHandler().getPlayerTimers(player);
                     for (Timer timer : defaultTimers) {
                         if (timer.getTime() > 0) {
                             String left = translateString(timer.getTimerType().getScore());
@@ -94,11 +94,11 @@ public class GooseTicker extends BukkitRunnable {
                 }
 
             } else {
-                double balance = SkyBlock.getPlugin().getEconomy().getBalance(player);
-                scoreboard.add(translateString(primaryColor + "Balance&7: "), translateString("&f$" + SkyBlock.getPlugin().format(balance)));
+                double balance = SkyBlock.getInstance().getEconomy().getBalance(player);
+                scoreboard.add(translateString(primaryColor + "Balance&7: "), translateString("&f$" + SkyBlock.getInstance().format(balance)));
                 scoreboard.add(translateString(primaryColor + "Mob Coins&7: "), translateString("&f" + user.getProfile("mobcoins").getDouble("coins").intValue()));
                 scoreboard.add(" ", " ");
-                Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
+                Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(player);
                 if (island == null) {
                     scoreboard.add(translateString(primaryColor + "Island&7: "), translateString("&fNone"));
                 } else {
@@ -122,6 +122,6 @@ public class GooseTicker extends BukkitRunnable {
 
 
     private boolean hasAnyTimers(Player player) {
-        return SkyBlock.getPlugin().getTimerHandler().getPlayerTimers(player).stream().filter(timer -> timer.getTime() > 0).count() > 0;
+        return SkyBlock.getInstance().getTimerHandler().getPlayerTimers(player).stream().filter(timer -> timer.getTime() > 0).count() > 0;
     }
 }

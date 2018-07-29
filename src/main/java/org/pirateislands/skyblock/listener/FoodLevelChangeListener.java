@@ -13,7 +13,7 @@ public class FoodLevelChangeListener implements Listener {
 
         Player player = (Player) event.getEntity();
 
-        if (!(player.getWorld() == SkyBlock.getPlugin().getServerConfig().getSpawnLocation().getWorld())) return;
+        if (!(player.getWorld() == SkyBlock.getInstance().getServerConfig().getSpawnLocation().getWorld())) return;
 
         event.setCancelled(true);
     }

@@ -17,7 +17,7 @@ public class IslandReloadCommand extends GooseCommand {
             sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
             return;
         }
-        SkyBlock.getPlugin().getOreGenerationConfig().loadValues();
+        SkyBlock.getInstance().getOreGenerationConfig().loadValues();
         sender.sendMessage(ChatColor.YELLOW + "You have successfully reloaded the ore generation configuration.");
     }
 }

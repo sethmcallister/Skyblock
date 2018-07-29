@@ -11,9 +11,10 @@ public class BackupTask extends BukkitRunnable {
     @Override
     public void run() {
         Bukkit.broadcastMessage(ChatColor.RED + "[Backup] We're backing up the server, we apologize for any lag.");
-        SkyBlock.getPlugin().getIslandWorld().save();
-        SkyBlock.getPlugin().getIslandHandler().getPlayerIslands().forEach(Island::save);
-        SkyBlock.getPlugin().getServerConfig().save();
+        SkyBlock.getInstance().getIslandWorld().save();
+        SkyBlock.getInstance().getIslandHandler().getPlayerIslands().forEach(Island::save);
+        SkyBlock.getInstance().getServerConfig().save();
+        SkyBlock.getInstance().getQuestHandler().save();
         Bukkit.broadcastMessage(ChatColor.RED + "[Backup] We have successfully saved all of our data.");
     }
 }

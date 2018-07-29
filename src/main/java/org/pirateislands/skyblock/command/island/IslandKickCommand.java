@@ -25,7 +25,7 @@ public class IslandKickCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(player);
 
         if (island == null) {
             player.sendMessage(ChatColor.RED + "You do not currently have an island.");
@@ -50,8 +50,8 @@ public class IslandKickCommand extends GooseCommand {
         }
 
         island.getMembers().remove(target.getUniqueId());
-        if (SkyBlock.getPlugin().getIslandHandler().isInIslandRegion(island, target.getLocation())) {
-            target.teleport(SkyBlock.getPlugin().getServerConfig().getSpawnLocation());
+        if (SkyBlock.getInstance().getIslandHandler().isInIslandRegion(island, target.getLocation())) {
+            target.teleport(SkyBlock.getInstance().getServerConfig().getSpawnLocation());
         }
         MessageUtil.sendServerTheme(player, ChatColor.YELLOW + String.format("You have kicked %s from your island.", target.getName()));
         MessageUtil.sendServerTheme(target, ChatColor.YELLOW + String.format("You have been kicked from %s's island.", player.getName()));

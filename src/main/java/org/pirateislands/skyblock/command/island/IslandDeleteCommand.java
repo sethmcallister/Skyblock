@@ -25,7 +25,7 @@ public class IslandDeleteCommand extends GooseCommand implements Listener {
             player.sendMessage(ChatColor.RED + "Usage: /island delete");
         }
 
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(player);
 
         if (island == null) {
             player.sendMessage(ChatColor.RED + "You do not have an island to delete.");
@@ -37,7 +37,7 @@ public class IslandDeleteCommand extends GooseCommand implements Listener {
             return;
         }
 
-        SkyBlock.getPlugin().getIslandHandler().deleteIsland(player, island);
+        SkyBlock.getInstance().getIslandHandler().deleteIsland(player, island);
         MessageUtil.sendServerTheme(player, "You have successfully deleted your island.");
     }
 }

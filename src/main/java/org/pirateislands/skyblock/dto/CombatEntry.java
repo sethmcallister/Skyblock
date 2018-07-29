@@ -36,7 +36,7 @@ public class CombatEntry extends BukkitRunnable implements Listener {
         this.uuid = player.getUniqueId();
         this.name = player.getName();
 
-        this.npc = SkyBlock.getPlugin().getCombatLogHandler().getNpcRegistry().createNPC(EntityType.PLAYER, this.uuid, this.name);
+        this.npc = SkyBlock.getInstance().getCombatLogHandler().getNpcRegistry().createNPC(EntityType.PLAYER, this.uuid, this.name);
 
         this.npc.spawn(player.getLocation());
         this.npc.setProtected(false);
@@ -68,7 +68,7 @@ public class CombatEntry extends BukkitRunnable implements Listener {
 
     public void removeNPC() {
         this.npc.despawn();
-        SkyBlock.getPlugin().getCombatLogHandler().getNpcRegistry().deregister(this.npc);
+        SkyBlock.getInstance().getCombatLogHandler().getNpcRegistry().deregister(this.npc);
     }
 
     public void updateTimer() {
@@ -89,10 +89,10 @@ public class CombatEntry extends BukkitRunnable implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        if (!SkyBlock.getPlugin().getCombatLogHandler().getNpcRegistry().isNPC(event.getEntity()))
+        if (!SkyBlock.getInstance().getCombatLogHandler().getNpcRegistry().isNPC(event.getEntity()))
             return;
 
-        NPC npc = SkyBlock.getPlugin().getCombatLogHandler().getNpcRegistry().getAsNPC(event.getEntity());
+        NPC npc = SkyBlock.getInstance().getCombatLogHandler().getNpcRegistry().getAsNPC(event.getEntity());
 
         if (!Objects.equals(npc, getNpc()))
             return;
@@ -108,10 +108,10 @@ public class CombatEntry extends BukkitRunnable implements Listener {
         deaths++;
         killedProfile.set("deaths", deaths);
 
-        Timer timer = SkyBlock.getPlugin().getTimerHandler().getTimer(killed, TimerType.COMBAT_TAG);
+        Timer timer = SkyBlock.getInstance().getTimerHandler().getTimer(killed, TimerType.COMBAT_TAG);
         if (timer != null && timer.getTime() > 0) {
             timer.setTime(0L);
-            SkyBlock.getPlugin().getTimerHandler().getPlayerTimers(killed).remove(timer);
+            SkyBlock.getInstance().getTimerHandler().getPlayerTimers(killed).remove(timer);
         }
 
         Player killer = killed.getKiller();

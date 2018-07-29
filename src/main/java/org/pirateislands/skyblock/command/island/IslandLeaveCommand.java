@@ -31,7 +31,7 @@ public class IslandLeaveCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(player);
         if (island == null) {
             player.sendMessage(ChatColor.RED + "You do not currently have an island.");
             return;
@@ -43,7 +43,7 @@ public class IslandLeaveCommand extends GooseCommand {
                 openNewOwnerSelector(player, island);
                 return;
             } else {
-                SkyBlock.getPlugin().getIslandHandler().deleteIsland(player, island);
+                SkyBlock.getInstance().getIslandHandler().deleteIsland(player, island);
 //                Bukkit.broadcastMessage(ChatColor.GRAY + ChatColor.BOLD.toString() + island.getName() + " Status: " + ChatColor.RED + ChatColor.BOLD.toString() + "[FALLEN]");
             }
         } else {
@@ -52,7 +52,7 @@ public class IslandLeaveCommand extends GooseCommand {
                 island.getMembers().remove(player.getUniqueId());
             }
         }
-        player.teleport(SkyBlock.getPlugin().getServerConfig().getSpawnLocation());
+        player.teleport(SkyBlock.getInstance().getServerConfig().getSpawnLocation());
         MessageUtil.sendServerTheme(player, ChatColor.YELLOW + "You have successfully left your island.");
         return;
     }

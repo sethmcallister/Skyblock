@@ -14,13 +14,13 @@ import java.util.UUID;
 public class IslandForceJoinCommand extends GooseCommand {
 
     public IslandForceJoinCommand() {
-        super("force", Lists.newArrayList("join"), true);
+        super("force", Lists.newArrayList("forcejoin"), true);
     }
 
     @Override
     public void execute(Player player, String[] args) {
         if (args.length != 1) {
-            player.sendMessage(ChatColor.RED + "/is force <playerInIsland>");
+            player.sendMessage(ChatColor.RED + "Usage: /is force <playerInIsland>");
             return;
         }
 
@@ -29,7 +29,7 @@ public class IslandForceJoinCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(player);
         if (island != null) {
             player.sendMessage(ChatColor.RED + "You have to leave your current island first");
             return;
@@ -43,7 +43,7 @@ public class IslandForceJoinCommand extends GooseCommand {
 
         UUID playerUUID = offlinePlayer.getUniqueId();
 
-        Island targetIsland = SkyBlock.getPlugin().getIslandHandler().findByUniqueId(playerUUID);
+        Island targetIsland = SkyBlock.getInstance().getIslandHandler().findByUniqueId(playerUUID);
 
         if (targetIsland == null) {
             player.sendMessage(ChatColor.RED + String.format("The player '%s' does not have an island.", offlinePlayer.getName()));

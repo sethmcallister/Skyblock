@@ -24,7 +24,7 @@ public class IslandSetHomeCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(player);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(player);
 
         if (island == null) {
             player.sendMessage(ChatColor.RED + "You must have an island to execute this command.");
@@ -35,7 +35,7 @@ public class IslandSetHomeCommand extends GooseCommand {
         int y = Math.round(player.getLocation().getBlockY());
         int z = Math.round(player.getLocation().getBlockZ());
 
-        if (!SkyBlock.getPlugin().getIslandHandler().getIslandAt(player.getLocation()).isMember(player.getUniqueId())) {
+        if (!SkyBlock.getInstance().getIslandHandler().getIslandAt(player.getLocation()).isMember(player.getUniqueId())) {
             player.sendMessage(ChatColor.RED + "You can only set your island home in your island's land.");
             return;
         }

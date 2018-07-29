@@ -23,7 +23,7 @@ public class IslandMembersCommand extends GooseCommand {
             return;
         }
 
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(sender);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(sender);
         if (island == null) {
             sender.sendMessage(ChatColor.RED + "You must be in an island to execute this command.");
             return;

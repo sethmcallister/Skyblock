@@ -96,7 +96,7 @@ public class CombatLogHandler implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onQuit(PlayerQuitEvent event) {
-        Timer timer = SkyBlock.getPlugin().getTimerHandler().getTimer(event.getPlayer(), TimerType.COMBAT_TAG);
+        Timer timer = SkyBlock.getInstance().getTimerHandler().getTimer(event.getPlayer(), TimerType.COMBAT_TAG);
         if (timer != null && timer.getTime() > 0)
             createNPC(event.getPlayer());
     }

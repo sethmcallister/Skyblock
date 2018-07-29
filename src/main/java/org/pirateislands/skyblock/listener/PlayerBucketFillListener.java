@@ -9,7 +9,7 @@ import org.pirateislands.skyblock.SkyBlock;
 public class PlayerBucketFillListener implements Listener {
     @EventHandler
     public void onPlayerBucketFill(final PlayerBucketFillEvent event) {
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandAt(event.getBlockClicked().getLocation());
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandAt(event.getBlockClicked().getLocation());
         if (island == null)
             return;
 

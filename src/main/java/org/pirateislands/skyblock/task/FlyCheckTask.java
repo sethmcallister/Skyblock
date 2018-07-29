@@ -17,7 +17,7 @@ public class FlyCheckTask extends BukkitRunnable {
                 return;
 
             Location location = player.getLocation();
-            Island island = SkyBlock.getPlugin().getIslandHandler().getIslandAt(location);
+            Island island = SkyBlock.getInstance().getIslandHandler().getIslandAt(location);
             if (island == null) {
                 return;
             }

@@ -16,12 +16,43 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.pirateislands.skyblock.SkyBlock;
 import org.pirateislands.skyblock.command.island.IslandCreateCommand;
+import org.pirateislands.skyblock.dto.Quest;
 import org.pirateislands.skyblock.handler.IslandHandler;
 import org.pirateislands.skyblock.util.MessageUtil;
 
 import java.io.File;
 
 public class InventoryClickListener implements Listener {
+
+    @EventHandler
+    public void onQuestInventoryClick(final InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player)) {
+            return;
+        }
+
+        if (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR) {
+            return;
+        }
+
+        Player player = (Player) event.getWhoClicked();
+
+        if (!event.getClickedInventory().getTitle().equalsIgnoreCase(SkyBlock.getInstance().getQuestHandler().getInventoryName()))
+            return;
+
+        event.setCancelled(true);
+
+        ItemStack item = event.getCurrentItem();
+        Quest quest = SkyBlock.getInstance().getQuestHandler().findQuestByItemStack(item);
+        if (quest == null)
+            return;
+
+        if (SkyBlock.getInstance().getQuestHandler().hasCompletedQuest(player, quest)) {
+            player.sendMessage(ChatColor.RED + "You have already completed this quest! Remember we release new quests every Friday.");
+            return;
+        }
+
+        quest.checkCompletion(player);
+    }
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
@@ -50,7 +81,7 @@ public class InventoryClickListener implements Listener {
                 @Override
                 public void run() {
                     IslandCreateCommand.ISLAND_MAKING.add(pl.getUniqueId());
-                    SkyBlock.getPlugin().getIslandHandler().createIsland(pl, type);
+                    SkyBlock.getInstance().getIslandHandler().createIsland(pl, type);
                 }
             }.runTaskAsynchronously(API.getPlugin());
         } else if (event.getClickedInventory().getTitle().equalsIgnoreCase("Owner Selection")) {
@@ -60,7 +91,7 @@ public class InventoryClickListener implements Listener {
             ItemStack item = event.getCurrentItem();
             ItemMeta meta = item.getItemMeta();
 
-            IslandHandler registry = SkyBlock.getPlugin().getIslandHandler();
+            IslandHandler registry = SkyBlock.getInstance().getIslandHandler();
 
             Island playerIsland = registry.getIslandForPlayer(pl);
 
@@ -75,8 +106,8 @@ public class InventoryClickListener implements Listener {
                 playerIsland.getMembers().remove(player.getUniqueId());
                 pl.closeInventory();
 
-                File file = new File(SkyBlock.getPlugin().getModuleDir().toString() + File.separator + "islands" + File.separator + pl.getUniqueId().toString().replace("-", "") + ".json");
-                file.renameTo(new File(SkyBlock.getPlugin().getModuleDir().toString() + File.separator + "islands" + File.separator + player.getUniqueId().toString().replace("-", "") + ".json"));
+                File file = new File(SkyBlock.getInstance().getModuleDir().toString() + File.separator + "islands" + File.separator + pl.getUniqueId().toString().replace("-", "") + ".json");
+                file.renameTo(new File(SkyBlock.getInstance().getModuleDir().toString() + File.separator + "islands" + File.separator + player.getUniqueId().toString().replace("-", "") + ".json"));
                 MessageUtil.sendServerTheme(pl, ChatColor.GREEN + String.format("You have promoted %s to your islands owner.", player.getName()));
             } else {
                 playerIsland.setOwner(newOwner.getUniqueId());
@@ -84,12 +115,12 @@ public class InventoryClickListener implements Listener {
                 playerIsland.getMembers().remove(newOwner.getUniqueId());
                 pl.closeInventory();
 
-                File file = new File(SkyBlock.getPlugin().getModuleDir().toString() + File.separator + "islands" + File.separator + pl.getUniqueId().toString().replace("-", "") + ".json");
-                file.renameTo(new File(SkyBlock.getPlugin().getModuleDir().toString() + File.separator + "islands" + File.separator + newOwner.getUniqueId().toString().replace("-", "") + ".json"));
+                File file = new File(SkyBlock.getInstance().getModuleDir().toString() + File.separator + "islands" + File.separator + pl.getUniqueId().toString().replace("-", "") + ".json");
+                file.renameTo(new File(SkyBlock.getInstance().getModuleDir().toString() + File.separator + "islands" + File.separator + newOwner.getUniqueId().toString().replace("-", "") + ".json"));
                 MessageUtil.sendServerTheme(pl, ChatColor.GREEN + String.format("You have promoted %s to your islands owner.", newOwner.getName()));
                 MessageUtil.sendServerTheme(newOwner, ChatColor.GREEN + String.format("You have been promoted to owner of %s's island", pl.getName()));
             }
-            pl.teleport(SkyBlock.getPlugin().getServerConfig().getSpawnLocation());
+            pl.teleport(SkyBlock.getInstance().getServerConfig().getSpawnLocation());
             pl.sendMessage(org.bukkit.ChatColor.GREEN + org.bukkit.ChatColor.BOLD.toString() + "[!] " + org.bukkit.ChatColor.GRAY + "Successfully left your island!");
         }
     }

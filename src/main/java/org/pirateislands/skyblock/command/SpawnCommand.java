@@ -24,7 +24,7 @@ public class SpawnCommand extends BukkitCommand {
         new BukkitRunnable() {
             @Override
             public void run() {
-                player.teleport(SkyBlock.getPlugin().getServerConfig().getSpawnLocation());
+                player.teleport(SkyBlock.getInstance().getServerConfig().getSpawnLocation());
                 player.sendMessage(ChatColor.YELLOW + "You have been teleported to spawn");
             }
         }.runTaskLater(API.getPlugin(), 3 * 20L);

@@ -16,7 +16,7 @@ public class IslandLockCommand extends GooseCommand {
 
     @Override
     public void execute(Player sender, String[] args) {
-        if (SkyBlock.getPlugin().getServerConfig().getServerType() == ServerType.ISLES) {
+        if (SkyBlock.getInstance().getServerConfig().getServerType() == ServerType.ISLES) {
             sender.sendMessage(ChatColor.RED + "That cannot be used on this realm!");
             return;
         }
@@ -25,7 +25,7 @@ public class IslandLockCommand extends GooseCommand {
             sender.sendMessage(ChatColor.RED + "Usage: /island lock");
             return;
         }
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(sender);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(sender);
 
         if (island == null) {
             sender.sendMessage(ChatColor.RED + "You do not currently have an island.");

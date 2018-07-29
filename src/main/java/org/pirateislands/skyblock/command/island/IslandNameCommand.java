@@ -22,7 +22,7 @@ public class IslandNameCommand extends GooseCommand {
         }
 
         String name = args[0];
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer(sender);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer(sender);
 
         if (island == null) {
             sender.sendMessage(ChatColor.RED + "You do not have an island to name!");

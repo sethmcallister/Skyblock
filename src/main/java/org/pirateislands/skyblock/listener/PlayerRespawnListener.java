@@ -11,7 +11,7 @@ public class PlayerRespawnListener implements Listener {
     @EventHandler
     public void onPlayerRespawn(final PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        Location spawn = SkyBlock.getPlugin().getServerConfig().getSpawnLocation();
+        Location spawn = SkyBlock.getInstance().getServerConfig().getSpawnLocation();
         player.teleport(spawn);
         event.setRespawnLocation(spawn);
     }

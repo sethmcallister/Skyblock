@@ -32,12 +32,12 @@ public class PayCommand extends BukkitCommand {
         }
 
         int toPay = Integer.parseInt(args[1]);
-        if (!SkyBlock.getPlugin().getEconomy().has(player, toPay)) {
+        if (!SkyBlock.getInstance().getEconomy().has(player, toPay)) {
             sender.sendMessage(ChatColor.RED + String.format("You do not have $%s to pay %s.", toPay, target.getName()));
             return true;
         }
-        SkyBlock.getPlugin().getEconomy().withdrawPlayer(player, toPay);
-        SkyBlock.getPlugin().getEconomy().depositPlayer(target, toPay);
+        SkyBlock.getInstance().getEconomy().withdrawPlayer(player, toPay);
+        SkyBlock.getInstance().getEconomy().depositPlayer(target, toPay);
         sender.sendMessage(ChatColor.YELLOW + String.format("You have paid %s to %s", toPay, target.getName()));
         target.sendMessage(ChatColor.YELLOW + String.format("You have been paid %s by %s", toPay, sender.getName()));
         return true;

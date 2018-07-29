@@ -39,7 +39,7 @@ public class SetIslandSizeCommand extends BukkitCommand {
             sender.sendMessage(ChatColor.RED + "No player with the name or UUID of '%s' is online.");
             return true;
         }
-        Island island = SkyBlock.getPlugin().getIslandHandler().getIslandForPlayer((Player) target);
+        Island island = SkyBlock.getInstance().getIslandHandler().getIslandForPlayer((Player) target);
         if (island == null) {
             sender.sendMessage(ChatColor.RED + String.format("No island for the player '%s' could be found.", args[0]));
             return true;
@@ -64,12 +64,12 @@ public class SetIslandSizeCommand extends BukkitCommand {
         double maxZ = center.getBlockZ() + size / 2D;
 
 
-        Location min = new Location(SkyBlock.getPlugin().getIslandWorld(), minX, minY, minZ);
-        Location max = new Location(SkyBlock.getPlugin().getIslandWorld(), maxX, maxY, maxZ);
+        Location min = new Location(SkyBlock.getInstance().getIslandWorld(), minX, minY, minZ);
+        Location max = new Location(SkyBlock.getInstance().getIslandWorld(), maxX, maxY, maxZ);
 
-//        SkyBlock.getPlugin().getRegionHandler().deleteRegion(island.getContainer());
+//        SkyBlock.getInstance().getRegionHandler().deleteRegion(island.getContainer());
 
-//        Region container = SkyBlock.getPlugin().getRegionHandler().createRegion(island.getName(), min, max);
+//        Region container = SkyBlock.getInstance().getRegionHandler().createRegion(island.getName(), min, max);
         Region container = new Region(island.getName(), GooseLocationHelper.fromLocation(min), GooseLocationHelper.fromLocation(max));
         island.setContainer(container);
         island.save();

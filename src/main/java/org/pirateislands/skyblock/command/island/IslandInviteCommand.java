@@ -42,7 +42,7 @@ public class IslandInviteCommand extends GooseCommand {
             return;
         }
 
-        IslandHandler registry = SkyBlock.getPlugin().getIslandHandler();
+        IslandHandler registry = SkyBlock.getInstance().getIslandHandler();
 
         if (!registry.hasIsland(player)) {
             player.sendMessage(ChatColor.RED + "You do not currently have an island.");

@@ -21,7 +21,7 @@ public class SchematicUtil {
     }
 
     public static void pasteSchematic(String file, World world, int x, int y, int z) throws DataException, IOException, MaxChangedBlocksException {
-        File schematic = new File(SkyBlock.getPlugin().getModuleDir() + "/schematics", file);
+        File schematic = new File(SkyBlock.getInstance().getModuleDir() + "/schematics", file);
         if (schematic.exists()) {
             Vector origin = new Vector(x, y, z);
 

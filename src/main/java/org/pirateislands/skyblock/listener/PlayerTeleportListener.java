@@ -10,7 +10,7 @@ import org.pirateislands.skyblock.SkyBlock;
 public class PlayerTeleportListener implements Listener {
     @EventHandler
     public void onTeleport(final PlayerTeleportEvent event) {
-        Island to = SkyBlock.getPlugin().getIslandHandler().getIslandAt(event.getTo());
+        Island to = SkyBlock.getInstance().getIslandHandler().getIslandAt(event.getTo());
         if (to == null)
             return;
 

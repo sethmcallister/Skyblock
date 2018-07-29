@@ -33,11 +33,11 @@ public class PlayerDamageListener implements Listener {
         }
 
 
-        Timer timer = SkyBlock.getPlugin().getTimerHandler().getTimer(damaged, TimerType.COMBAT_TAG);
+        Timer timer = SkyBlock.getInstance().getTimerHandler().getTimer(damaged, TimerType.COMBAT_TAG);
         if (timer != null && timer.getTime() > 0)
             timer.setTime(TimeUnit.SECONDS.toMillis(30L) + System.currentTimeMillis());
         else
-            SkyBlock.getPlugin().getTimerHandler().addTimer(damaged, new DefaultTimer(TimerType.COMBAT_TAG, TimeUnit.SECONDS.toMillis(30L) + System.currentTimeMillis(), damaged));
+            SkyBlock.getInstance().getTimerHandler().addTimer(damaged, new DefaultTimer(TimerType.COMBAT_TAG, TimeUnit.SECONDS.toMillis(30L) + System.currentTimeMillis(), damaged));
 
         if (!(event.getDamager() instanceof Player))
             return;
@@ -52,11 +52,11 @@ public class PlayerDamageListener implements Listener {
             damager.setAllowFlight(false);
         }
 
-        Timer timer1 = SkyBlock.getPlugin().getTimerHandler().getTimer(damager, TimerType.COMBAT_TAG);
+        Timer timer1 = SkyBlock.getInstance().getTimerHandler().getTimer(damager, TimerType.COMBAT_TAG);
         if (timer1 != null && timer1.getTime() > 0)
             timer1.setTime(TimeUnit.SECONDS.toMillis(30L) + System.currentTimeMillis());
         else
-            SkyBlock.getPlugin().getTimerHandler().addTimer(damager, new DefaultTimer(TimerType.COMBAT_TAG, TimeUnit.SECONDS.toMillis(30L) + System.currentTimeMillis(), damager));
+            SkyBlock.getInstance().getTimerHandler().addTimer(damager, new DefaultTimer(TimerType.COMBAT_TAG, TimeUnit.SECONDS.toMillis(30L) + System.currentTimeMillis(), damager));
     }
 
     @EventHandler
@@ -66,12 +66,12 @@ public class PlayerDamageListener implements Listener {
 
         Player player = (Player) event.getEntity();
 
-        if (!(player.getWorld() == SkyBlock.getPlugin().getServerConfig().getSpawnLocation().getWorld()))
+        if (!(player.getWorld() == SkyBlock.getInstance().getServerConfig().getSpawnLocation().getWorld()))
             return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
             System.out.println(193);
-            player.teleport(SkyBlock.getPlugin().getServerConfig().getSpawnLocation());
+            player.teleport(SkyBlock.getInstance().getServerConfig().getSpawnLocation());
             return;
         }
 

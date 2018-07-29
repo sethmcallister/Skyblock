@@ -41,8 +41,8 @@ public class IslandCreateQueueTask extends BukkitRunnable {
                 continue;
             }
 
-//            int islandNumber = SkyBlock.getPlugin().getServerConfig().getIslandsEverCreated().incrementAndGet();
-//            int prime = SkyBlock.getPlugin().getGridUtil().getInts()[islandNumber];
+//            int islandNumber = SkyBlock.getInstance().getServerConfig().getIslandsEverCreated().incrementAndGet();
+//            int prime = SkyBlock.getInstance().getGridUtil().getInts()[islandNumber];
 //
 //            int xZ = prime * 1000;
 
@@ -52,25 +52,25 @@ public class IslandCreateQueueTask extends BukkitRunnable {
 
 //            Location center;
 //
-//            if (SkyBlock.getPlugin().getIslandHandler().getLastIsland() == null) {
-//                center = new Location(SkyBlock.getPlugin().getIslandWorld(), 0, 100, 0);
+//            if (SkyBlock.getInstance().getIslandHandler().getLastIsland() == null) {
+//                center = new Location(SkyBlock.getInstance().getIslandWorld(), 0, 100, 0);
 //            }
 //            else {
-//                center = SkyBlock.getPlugin().getIslandHandler().nextIslandLocation(SkyBlock.getPlugin().getIslandHandler().getLastIsland());
+//                center = SkyBlock.getInstance().getIslandHandler().nextIslandLocation(SkyBlock.getInstance().getIslandHandler().getLastIsland());
 //            }
 
             if (center == null) {
-                center = new Location(SkyBlock.getPlugin().getIslandWorld(), 0, 100, 0);
+                center = new Location(SkyBlock.getInstance().getIslandWorld(), 0, 100, 0);
             }
 
             if (center.getWorld() == null || center.getWorld().getName().equalsIgnoreCase("world")) {
-                center = new Location(SkyBlock.getPlugin().getIslandWorld(), 0, 100, 0);
+                center = new Location(SkyBlock.getInstance().getIslandWorld(), 0, 100, 0);
                 System.out.println("center null again");
             }
 
             // For some reason this fixes it??
             center = center.clone().add(0, 0, 0);
-            if (SkyBlock.getPlugin().getServerConfig().getServerType().equals(ServerType.ISLES)) {
+            if (SkyBlock.getInstance().getServerConfig().getServerType().equals(ServerType.ISLES)) {
                 center = center.subtract(0, 2, 0);
             }
             System.out.println(String.format("LOCATION SERIALIZED IS %s", LocationUtil.serialize(center)));
@@ -87,11 +87,11 @@ public class IslandCreateQueueTask extends BukkitRunnable {
             double maxZ = center.getBlockZ() + island.getType().getSize() / 2D;
 
 
-            Location min = new Location(SkyBlock.getPlugin().getIslandWorld(), minX, minY, minZ);
-            Location max = new Location(SkyBlock.getPlugin().getIslandWorld(), maxX, maxY, maxZ);
+            Location min = new Location(SkyBlock.getInstance().getIslandWorld(), minX, minY, minZ);
+            Location max = new Location(SkyBlock.getInstance().getIslandWorld(), maxX, maxY, maxZ);
 
 
-//            Region container = SkyBlock.getPlugin().getRegionHandler().createRegion(island.getName(), min, max);
+//            Region container = SkyBlock.getInstance().getRegionHandler().createRegion(island.getName(), min, max);
             Region container = new Region(island.getName(), GooseLocationHelper.fromLocation(min), GooseLocationHelper.fromLocation(max));
             island.setContainer(container);
             island.setMembers(new ArrayList<>());
@@ -100,15 +100,15 @@ public class IslandCreateQueueTask extends BukkitRunnable {
 
 
             int maxPlayers = 4;
-            if (SkyBlock.getPlugin().getServerConfig().getServerType() == ServerType.ISLES)
+            if (SkyBlock.getInstance().getServerConfig().getServerType() == ServerType.ISLES)
                 maxPlayers = 5;
 
             island.setMaxPlayers(maxPlayers);
 
-            int y = SkyBlock.getPlugin().getServerConfig().getServerType().equals(ServerType.ISLES) ? 46 : 100;
+            int y = SkyBlock.getInstance().getServerConfig().getServerType().equals(ServerType.ISLES) ? 46 : 100;
 
             try {
-                SchematicUtil.pasteSchematic(item.type.name().toLowerCase() + ".schematic", SkyBlock.getPlugin().getIslandWorld(), center.getBlockX(), y, center.getBlockZ());
+                SchematicUtil.pasteSchematic(item.type.name().toLowerCase() + ".schematic", SkyBlock.getInstance().getIslandWorld(), center.getBlockX(), y, center.getBlockZ());
             } catch (DataException | IOException | MaxChangedBlocksException e) {
                 e.printStackTrace();
             }
@@ -121,11 +121,11 @@ public class IslandCreateQueueTask extends BukkitRunnable {
 
             MessageUtil.sendServerTheme(player, ChatColor.GREEN + "Your island has been created.");
             player.sendMessage(ChatColor.GREEN + "Type (/is home) to visit.");
-            SkyBlock.getPlugin().getIslandHandler().registerIsland(player.getUniqueId(), island);
+            SkyBlock.getInstance().getIslandHandler().registerIsland(player.getUniqueId(), island);
             this.islandQueue.remove(item);
-            SkyBlock.getPlugin().getIslandHandler().setLastIsland(center);
-            SkyBlock.getPlugin().getServerConfig().setLastIslandLocation(GooseLocationHelper.fromLocation(center));
-            SkyBlock.getPlugin().getServerConfig().save();
+            SkyBlock.getInstance().getIslandHandler().setLastIsland(center);
+            SkyBlock.getInstance().getServerConfig().setLastIslandLocation(GooseLocationHelper.fromLocation(center));
+            SkyBlock.getInstance().getServerConfig().save();
 
             IslandCreateCommand.ISLAND_MAKING.remove(player.getUniqueId());
             island.save();
@@ -133,13 +133,13 @@ public class IslandCreateQueueTask extends BukkitRunnable {
     }
 
     private Location getLocation() {
-        GooseLocation last = SkyBlock.getPlugin().getServerConfig().getLastIslandLocation();
+        GooseLocation last = SkyBlock.getInstance().getServerConfig().getLastIslandLocation();
         if (last == null) {
-            last = GooseLocationHelper.fromLocation(new Location(SkyBlock.getPlugin().getIslandWorld(), 0, 0, 0));
+            last = GooseLocationHelper.fromLocation(new Location(SkyBlock.getInstance().getIslandWorld(), 0, 0, 0));
         }
-        Location next = SkyBlock.getPlugin().getIslandHandler().getNextLocation(GooseLocationHelper.toLocation(last));
-        while (SkyBlock.getPlugin().getIslandHandler().getIslandAt(next) != null) {
-            next = SkyBlock.getPlugin().getIslandHandler().getNextLocation(next);
+        Location next = SkyBlock.getInstance().getIslandHandler().getNextLocation(GooseLocationHelper.toLocation(last));
+        while (SkyBlock.getInstance().getIslandHandler().getIslandAt(next) != null) {
+            next = SkyBlock.getInstance().getIslandHandler().getNextLocation(next);
         }
         return next;
     }
